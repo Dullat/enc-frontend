@@ -19,7 +19,7 @@ const Hero = ({ color = "#FF6200", onEnter = () => {} }) => {
   }, []);
 
   return (
-    <section className="relative flex flex-col justify-center h-full min-h-screen px-6 md:px-12 overflow-hidden">
+    <section className="relative flex flex-col justify-center h-max snap-start min-h-screen px-6 md:px-12 overflow-hidden">
       {/* BG circuit lines */}
       <HeroBgSvg color={color} />
 
@@ -136,8 +136,7 @@ const Hero = ({ color = "#FF6200", onEnter = () => {} }) => {
       >
         <button
           onClick={onEnter}
-          className="relative overflow-hidden group"
-          className={`font-family-display font-bold text-[0.68rem] tracking-[0.3em] px-[2.2rem] py-[0.9rem] border-none cursor-pointer transition-shadow duration-300`}
+          className={`relative overflow-hidden group font-family-display font-bold text-[0.68rem] tracking-[0.3em] px-[2.2rem] py-[0.9rem] border-none cursor-pointer transition-shadow duration-300`}
           style={{ background: color, color: "#060608" }}
           onMouseEnter={(e) =>
             (e.currentTarget.style.boxShadow = `0 0 30px rgba(${hexToRgb(color)},0.45)`)
@@ -174,7 +173,7 @@ const Hero = ({ color = "#FF6200", onEnter = () => {} }) => {
 
       {/* Stat strip */}
       <div
-        className="flex flex-wrap gap-px mt-14"
+        className="flex flex-wrap gap-px mt-14 [@media(max-height:800px)]:hidden"
         style={{ animation: "ds-fadeup 0.6s 0.5s ease both" }}
       >
         {STATS.map((s, i) => (
