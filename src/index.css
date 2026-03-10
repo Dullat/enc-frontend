@@ -1,0 +1,568 @@
+@import "tailwindcss"; /* usingg Tailwind v4, so everyting is keept here
+
+/* ============================================================
+   DEDSEC theme // ENCRYPTION NETWORK CORP
+   all the comments are to explain things, coz i might forget in future
+   usage is clear and well defined
+
+
+/* ── Veriables, common ones ───────────────────────── */
+:root {
+  /* Backgrounds */
+  --bg-void:        #060608;
+  --bg-surface:     #0b0b0f;
+  --bg-surface-2:   #111118;
+
+  /* Borders */
+  --border-base:    #18181f;
+  --border-hi:      #252530;
+
+  /* Accents */
+  --accent-orange:  #FF6200;
+  --accent-magenta: #FF0066;
+  --accent-cyan:    #00C8FF;
+  --accent-gold:    #C9A84C;
+  --accent-green:   #00E87A;
+
+  /* Text */
+  --text-white:     #F2F2FA;
+  --text-body:      #C4C4D4;
+  --text-muted:     #44445A;
+  --text-ghost:     #1e1e2a;
+
+  /* Fonts */
+  --font-display:   'Orbitron', sans-serif;
+  --font-mono:      'JetBrains Mono', monospace;
+  --font-num:       'Bebas Neue', sans-serif;
+
+  /* Shadows and glows */
+  --shadow-card:    0 24px 48px rgba(0,0,0,0.65);
+  --glow-o:         0 0 22px rgba(255,98,0,0.4);
+  --glow-m:         0 0 22px rgba(255,0,102,0.4);
+  --glow-c:         0 0 22px rgba(0,200,255,0.4);
+  --glow-g:         0 0 22px rgba(201,168,76,0.35);
+  --glow-green:     0 0 22px rgba(0,232,122,0.35);
+
+  /* Easing */
+  --ease-ds:        cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ── TAILWIND THEME  ────────────────────────────────────
+   bg-void, text-orange, border-cyan, font-display, shadow-card                */
+@theme {
+  /* Just type bg-void for the Primary-bg */
+  --color-void:        var(--bg-void);
+  --color-surface:     var(--bg-surface);
+  --color-surface2:    var(--bg-surface-2);
+  --color-line:        var(--border-base);
+  --color-line-hi:     var(--border-hi);
+  --color-orange:      var(--accent-orange);
+  --color-magenta:     var(--accent-magenta);
+  --color-cyan:        var(--accent-cyan);
+  --color-gold:        var(--accent-gold);
+  --color-green:       var(--accent-green);
+  --color-ds-white:    var(--text-white);
+  --color-body:        var(--text-body);
+  --color-muted:       var(--text-muted);
+  --color-ghost:       var(--text-ghost);
+
+  --font-family-display: var(--font-display);
+  --font-family-mono:    var(--font-mono);
+  --font-family-num:     var(--font-num);
+
+  --shadow-card:         var(--shadow-card);
+  --shadow-glow-o:       var(--glow-o);
+  --shadow-glow-m:       var(--glow-m);
+  --shadow-glow-c:       var(--glow-c);
+  --shadow-glow-g:       var(--glow-g);
+
+  --ease-ds: var(--ease-ds);
+}
+
+/* ── BASE - Reset ─────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+* { border-radius: 0 !important; } /* brutalism, everywhere baby */
+/* Also plan to add weird rounded blobs of rgba later for diff sections that belong less to this project */
+
+html { -webkit-font-smoothing: antialiased; }
+
+body {
+  background-color: var(--bg-void);
+  color: var(--text-body);
+  font-family: var(--font-mono);
+  line-height: 1.6;
+}
+
+::selection { background: rgba(255,98,0,0.25); color: var(--text-white); }
+
+::-webkit-scrollbar       { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: var(--bg-void); }
+::-webkit-scrollbar-thumb { background: var(--border-hi); }
+::-webkit-scrollbar-thumb:hover { background: var(--accent-orange); }
+
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+
+@utility text-display-xl {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 900;
+  letter-spacing: 0.3em;
+  color: var(--text-white);
+  line-height: 1.1;
+}
+@utility text-display-lg {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 900;
+  letter-spacing: 0.25em;
+  color: var(--text-white);
+  line-height: 1.15;
+}
+@utility text-display-md {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 2.5vw, 1.8rem);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--text-white);
+}
+@utility text-display-sm {
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--text-white);
+}
+@utility text-display-xs {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  color: var(--text-white);
+}
+
+@utility text-ui-lg  { font-family: var(--font-mono); font-size: 1rem;    letter-spacing: 0.05em; }
+@utility text-ui-md  { font-family: var(--font-mono); font-size: 0.82rem; letter-spacing: 0.08em; }
+@utility text-ui-sm  { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.1em;  }
+@utility text-ui-xs  { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.15em; }
+@utility text-ui-xxs { font-family: var(--font-mono); font-size: 0.55rem; letter-spacing: 0.2em;  }
+
+@utility text-stat-xl { font-family: var(--font-num); font-size: 4rem;   line-height: 1; }
+@utility text-stat-lg { font-family: var(--font-num); font-size: 3rem;   line-height: 1; }
+@utility text-stat-md { font-family: var(--font-num); font-size: 2rem;   line-height: 1; }
+@utility text-stat-sm { font-family: var(--font-num); font-size: 1.4rem; line-height: 1; }
+
+@utility text-label {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+@utility text-seq {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+
+/* ============================================================
+   GLOW UTILs
+   it woll make things glow like btns : className="glow-o"   className="hover:glow-c"
+   ============================================================ */
+@utility glow-o     { box-shadow: var(--glow-o);   }
+@utility glow-m     { box-shadow: var(--glow-m);   }
+@utility glow-c     { box-shadow: var(--glow-c);   }
+@utility glow-g     { box-shadow: var(--glow-g);   }
+@utility glow-green { box-shadow: var(--glow-green); }
+
+@utility text-glow-o { text-shadow: 0 0 20px rgba(255,98,0,0.65);   }
+@utility text-glow-m { text-shadow: 0 0 20px rgba(255,0,102,0.65);  }
+@utility text-glow-c { text-shadow: 0 0 20px rgba(0,200,255,0.65);  }
+@utility text-glow-g { text-shadow: 0 0 20px rgba(201,168,76,0.55); }
+
+
+/* ============================================================
+   GRADIENT UTILS, use for backgrounds, bars and btns
+   ============================================================ */
+@utility grad-top-om   { background: linear-gradient(90deg, transparent, var(--accent-orange), var(--accent-magenta), transparent); }
+@utility grad-top-o    { background: linear-gradient(90deg, transparent, var(--accent-orange),  transparent); }
+@utility grad-top-m    { background: linear-gradient(90deg, transparent, var(--accent-magenta), transparent); }
+@utility grad-top-c    { background: linear-gradient(90deg, transparent, var(--accent-cyan),    transparent); }
+@utility grad-top-g    { background: linear-gradient(90deg, transparent, var(--accent-gold),    transparent); }
+
+@utility grad-corner-o { background: radial-gradient(circle at 0% 100%, rgba(255,98,0,0.14)   0%, transparent 68%); }
+@utility grad-corner-m { background: radial-gradient(circle at 100% 0%, rgba(255,0,102,0.14)  0%, transparent 68%); }
+@utility grad-corner-c { background: radial-gradient(circle at 100% 0%, rgba(0,200,255,0.12)  0%, transparent 68%); }
+@utility grad-corner-g { background: radial-gradient(circle at 50%  50%, rgba(201,168,76,0.10) 0%, transparent 68%); }
+
+@utility grad-fill-o { background: linear-gradient(90deg, rgba(255,98,0,0.55),  var(--accent-orange));  }
+@utility grad-fill-m { background: linear-gradient(90deg, rgba(255,0,102,0.55), var(--accent-magenta)); }
+@utility grad-fill-c { background: linear-gradient(90deg, rgba(0,200,255,0.55), var(--accent-cyan));    }
+
+@utility grad-surface-fade { background: linear-gradient(180deg, var(--bg-surface), var(--bg-void)); }
+
+
+/* ============================================================
+   HUD BRACKETS
+   <div className="hud-tl" />  inside a display:relative parent
+          you can Tint by these classes : hud-color-m  hud-color-c  hud-color-g
+   ============================================================ */
+@utility hud-tl {
+  position: absolute; top: 5px; left: 5px;
+  width: 12px; height: 12px; pointer-events: none;
+}
+@utility hud-tr {
+  position: absolute; top: 5px; right: 5px;
+  width: 12px; height: 12px; pointer-events: none;
+}
+@utility hud-bl {
+  position: absolute; bottom: 5px; left: 5px;
+  width: 12px; height: 12px; pointer-events: none;
+}
+@utility hud-br {
+  position: absolute; bottom: 5px; right: 5px;
+  width: 12px; height: 12px; pointer-events: none;
+}
+
+/* Base lines: orange is default, override with hud-color-* , check below */
+.hud-tl::before,.hud-tr::before,.hud-bl::before,.hud-br::before,
+.hud-tl::after, .hud-tr::after, .hud-bl::after, .hud-br::after {
+  content: ''; position: absolute; background: var(--hud-color, var(--accent-orange));
+}
+.hud-tl::before { top:0; left:0;   width:100%; height:1px; }
+.hud-tl::after  { top:0; left:0;   width:1px;  height:100%; }
+.hud-tr::before { top:0; right:0;  width:100%; height:1px; }
+.hud-tr::after  { top:0; right:0;  width:1px;  height:100%; }
+.hud-bl::before { bottom:0; left:0;  width:100%; height:1px; }
+.hud-bl::after  { bottom:0; left:0;  width:1px;  height:100%; }
+.hud-br::before { bottom:0; right:0; width:100%; height:1px; }
+.hud-br::after  { bottom:0; right:0; width:1px;  height:100%; }
+
+/* Color overrides */
+@utility hud-color-o { --hud-color: var(--accent-orange);  }
+@utility hud-color-m { --hud-color: var(--accent-magenta); }
+@utility hud-color-c { --hud-color: var(--accent-cyan);    }
+@utility hud-color-g { --hud-color: var(--accent-gold);    }
+
+
+/* ============================================================
+   CARD : className="ds-card ds-card-o"
+   this card-o will add lighter bg
+   ============================================================ */
+@utility ds-card {
+  position: relative;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-base);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  transition: background 0.25s, border-color 0.25s;
+}
+.ds-card:hover {
+  background: var(--bg-surface-2);
+  border-color: var(--border-hi);
+}
+.ds-card::before {
+  content: ''; position: absolute;
+  top: 0; left: 0; right: 0; height: 2px;
+  background: transparent;
+}
+@utility ds-card-o    { &::before { background: linear-gradient(90deg, transparent, var(--accent-orange),  transparent); } }
+@utility ds-card-m    { &::before { background: linear-gradient(90deg, transparent, var(--accent-magenta), transparent); } }
+@utility ds-card-c    { &::before { background: linear-gradient(90deg, transparent, var(--accent-cyan),    transparent); } }
+@utility ds-card-g    { &::before { background: linear-gradient(90deg, transparent, var(--accent-gold),    transparent); } }
+@utility ds-card-om   { &::before { background: linear-gradient(90deg, transparent, var(--accent-orange), var(--accent-magenta), transparent); } }
+
+
+/* ============================================================
+   BUTTON: btn, outline, solid
+   ============================================================ */
+@utility ds-btn {
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  padding: 0.75rem 1.8rem;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s var(--ease-ds);
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+}
+/* Fill-sweep layer : needs a <span> child for text to sit above, otherwise just change the text-[some-color] */
+.ds-btn::before {
+  content: ''; position: absolute; inset: 0;
+  transform: translateX(-102%);
+  transition: transform 0.3s var(--ease-ds);
+  z-index: 0;
+}
+.ds-btn:hover::before { transform: translateX(0); }
+.ds-btn > * { position: relative; z-index: 1; }
+
+@utility ds-btn-solid-o  {
+  background: var(--accent-orange); color: var(--bg-void);
+}
+.ds-btn-solid-o:hover { box-shadow: var(--glow-o); }
+
+@utility ds-btn-solid-m  {
+  background: var(--accent-magenta); color: var(--bg-void);
+}
+.ds-btn-solid-m:hover { box-shadow: var(--glow-m); }
+
+@utility ds-btn-outline-o {
+  background: transparent;
+  border: 1px solid var(--accent-orange);
+  color: var(--accent-orange);
+}
+.ds-btn-outline-o::before { background: var(--accent-orange); }
+.ds-btn-outline-o:hover   { color: var(--bg-void); box-shadow: var(--glow-o); }
+
+@utility ds-btn-outline-m {
+  background: transparent;
+  border: 1px solid var(--accent-magenta);
+  color: var(--accent-magenta);
+}
+.ds-btn-outline-m::before { background: var(--accent-magenta); }
+.ds-btn-outline-m:hover   { color: var(--bg-void); box-shadow: var(--glow-m); }
+
+@utility ds-btn-outline-c {
+  background: transparent;
+  border: 1px solid var(--accent-cyan);
+  color: var(--accent-cyan);
+}
+.ds-btn-outline-c::before { background: var(--accent-cyan); }
+.ds-btn-outline-c:hover   { color: var(--bg-void); box-shadow: var(--glow-c); }
+
+@utility ds-btn-outline-g {
+  background: transparent;
+  border: 1px solid var(--accent-gold);
+  color: var(--accent-gold);
+}
+.ds-btn-outline-g::before { background: var(--accent-gold); }
+.ds-btn-outline-g:hover   { color: var(--bg-void); box-shadow: var(--glow-g); }
+
+@utility ds-btn-ghost {
+  background: transparent;
+  border: 1px solid var(--border-hi);
+  color: var(--text-muted);
+}
+.ds-btn-ghost:hover { border-color: var(--text-muted); color: var(--text-body); }
+
+@utility ds-btn-sm   { padding: 0.45rem 1.1rem; font-size: 0.58rem; letter-spacing: 0.22em; }
+@utility ds-btn-lg   { padding: 1rem   2.4rem;  font-size: 0.75rem; letter-spacing: 0.35em; }
+@utility ds-btn-full { width: 100%; }
+
+
+/* ============================================================
+   INPUT / FIELD
+   ============================================================ */
+@utility ds-input {
+  width: 100%;
+  background: var(--bg-void);
+  border: 1px solid var(--border-hi);
+  border-left: 2px solid var(--border-hi);
+  color: var(--text-white);
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  letter-spacing: 0.12em;
+  padding: 0.85rem 1rem;
+  outline: none;
+  transition: all 0.2s var(--ease-ds);
+}
+.ds-input::placeholder { color: var(--text-muted); }
+.ds-input:focus {
+  border-color: var(--accent-orange);
+  border-left-color: var(--accent-orange);
+  background: rgba(255,98,0,0.03);
+  box-shadow: 0 0 0 1px rgba(255,98,0,0.12);
+}
+@utility ds-input-m {
+  &:focus { border-color:var(--accent-magenta); border-left-color:var(--accent-magenta); background:rgba(255,0,102,0.03); box-shadow:0 0 0 1px rgba(255,0,102,0.12); }
+}
+@utility ds-input-c {
+  &:focus { border-color:var(--accent-cyan);    border-left-color:var(--accent-cyan);    background:rgba(0,200,255,0.03);  box-shadow:0 0 0 1px rgba(0,200,255,0.12); }
+}
+@utility ds-input-g {
+  &:focus { border-color:var(--accent-gold);    border-left-color:var(--accent-gold);    background:rgba(201,168,76,0.03); box-shadow:0 0 0 1px rgba(201,168,76,0.12); }
+}
+
+/* Field wrapper — label auto-highlights on focus */
+@utility ds-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.ds-field:focus-within .ds-field-label { color: var(--accent-orange); }
+
+@utility ds-field-label {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  display: block;
+  transition: color 0.2s;
+}
+
+
+/* ============================================================
+   BADGE , you also made a blinking dot , check below "ds-badge-live"
+   ============================================================ */
+@utility ds-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 0.28rem 0.65rem;
+  border: 1px solid currentColor;
+}
+.ds-badge::before { content:''; width:4px; height:4px; background:currentColor; flex-shrink:0; }
+
+@utility ds-badge-live { &::before { animation: ds-pulse 1.8s ease-in-out infinite; } }
+@utility ds-badge-o    { color: var(--accent-orange);  }
+@utility ds-badge-m    { color: var(--accent-magenta); }
+@utility ds-badge-c    { color: var(--accent-cyan);    }
+@utility ds-badge-g    { color: var(--accent-gold);    }
+@utility ds-badge-green{ color: var(--accent-green);   }
+@utility ds-badge-muted{ color: var(--text-muted);     }
+
+
+/* ============================================================
+   PROGRESS BAR
+   ex: "width" will define how much to fill
+
+     <div className="ds-track">
+       <div className="ds-fill ds-fill-c" style={{width:'69%'}} />
+     </div>
+
+   future plan: "you can make one react-hook for live loading"
+   ============================================================ */
+@utility ds-track       { height:3px; background:var(--border-base); overflow:hidden; position:relative; }
+@utility ds-track-thick { height:6px; }
+@utility ds-fill        { height:100%; transition: width 0.5s var(--ease-ds); }
+@utility ds-fill-o      { background: var(--accent-orange);  }
+@utility ds-fill-m      { background: var(--accent-magenta); }
+@utility ds-fill-c      { background: var(--accent-cyan);    }
+@utility ds-fill-g      { background: var(--accent-gold);    }
+@utility ds-fill-green  { background: var(--accent-green);   }
+@utility ds-fill-shimmer {
+  position: relative; overflow: hidden;
+}
+.ds-fill-shimmer::after {
+  content:''; position:absolute; inset:0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.18) 50%, transparent 100%);
+  animation: ds-shimmer 1.8s infinite;
+}
+
+
+/* ============================================================
+   STAT BLOCK: its not 1px bar, its top-to-below-hanging flag like box, with top-border-colored
+   ============================================================ */
+@utility ds-stat {
+  position: relative; background: var(--bg-surface); padding: 1.5rem;
+}
+.ds-stat::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; }
+@utility ds-stat-o    { &::before { background: var(--accent-orange);  } }
+@utility ds-stat-m    { &::before { background: var(--accent-magenta); } }
+@utility ds-stat-c    { &::before { background: var(--accent-cyan);    } }
+@utility ds-stat-g    { &::before { background: var(--accent-gold);    } }
+@utility ds-stat-num  { font-family:var(--font-num); font-size:2.5rem; line-height:1; margin-bottom:0.25rem; }
+@utility ds-stat-label{ font-family:var(--font-mono); font-size:0.56rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--text-muted); }
+
+
+/* ============================================================
+   DIVIDERS
+   ============================================================ */
+@utility ds-divider    { height:1px; background:var(--border-base); }
+@utility ds-divider-hi { height:1px; background:var(--border-hi);   }
+@utility ds-divider-o  { height:1px; background:linear-gradient(90deg,transparent,var(--accent-orange), transparent); }
+@utility ds-divider-m  { height:1px; background:linear-gradient(90deg,transparent,var(--accent-magenta),transparent); }
+@utility ds-divider-c  { height:1px; background:linear-gradient(90deg,transparent,var(--accent-cyan),   transparent); }
+
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+@utility ds-grid-gap {
+  display: grid; gap: 1px; background: var(--border-base);
+}
+.ds-grid-gap > * { background: var(--bg-surface); }
+
+@utility ds-status-bar {
+  display:flex; justify-content:space-between; align-items:center;
+  padding-bottom:0.75rem; border-bottom:1px solid var(--border-base);
+  font-family:var(--font-mono); font-size:0.6rem;
+  letter-spacing:0.2em; color:var(--text-muted);
+}
+
+
+/* ============================================================
+   EFFECTS: hacker-scanlins, vintage for videos, glitch effect for text, backdrop and blinking cursor
+   ============================================================ */
+@utility ds-scanlines {
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.07) 2px, rgba(0,0,0,0.07) 4px);
+}
+@utility ds-vignette {
+  background: radial-gradient(ellipse at center, transparent 32%, rgba(0,0,0,0.78) 100%);
+}
+@utility ds-backdrop {
+  background: rgba(6,6,8,0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+@utility ds-glitch {
+  position: relative;
+}
+.ds-glitch::after {
+  content: attr(data-text); position:absolute; left:0; top:0;
+  color: var(--accent-magenta);
+  clip-path: polygon(0 28%, 100% 28%, 100% 46%, 0 46%);
+  transform: translateX(-2px);
+  animation: ds-glitch 4s ease-in-out infinite;
+}
+@utility ds-cursor {
+  &::after { content:'|'; color:var(--accent-orange); animation:ds-blink 1s step-end infinite; margin-left:1px; }
+}
+
+
+/* ============================================================
+   KEYFRAMES: or use default tailwindcss's ones
+   ============================================================ */
+@keyframes ds-pulse   { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.3;transform:scale(.6)} }
+@keyframes ds-glitch  { 0%,92%,100%{opacity:0;transform:translateX(0)} 93%{opacity:.8;transform:translateX(-3px)} 96%{opacity:.5;transform:translateX(3px)} 99%{opacity:0} }
+@keyframes ds-shimmer { from{transform:translateX(-100%)} to{transform:translateX(200%)} }
+@keyframes ds-ticker  { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+@keyframes ds-fadeup  { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+@keyframes ds-blink   { 0%,49%{opacity:1} 50%,100%{opacity:0} }
+@keyframes noise {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(3px);
+  }
+}
+
+
+/* ======== For IOS/Browsers , to avoid weird shit  */
+
+.scroll-container {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* =============================================================
+   Other new, ideas and styles that will comeout later 
+   ============================================================= */

@@ -7,6 +7,14 @@ export const TICKER_ITEMS = [
   { label: "TOKEN", value: "EXPIRES IN 14:58", highlight: true },
 ];
 
+export const MODULE_ACCENT = {
+  home: { color: "#FF6200", label: "ORANGE" },
+  encrypt: { color: "#FF6200", label: "ORANGE" },
+  drive: { color: "#00C8FF", label: "CYAN" },
+  chat: { color: "#FF0066", label: "MAGENTA" },
+  profile: { color: "#C9A84C", label: "GOLD" },
+};
+
 export const FEATURES = [
   {
     seq: "F-01",
