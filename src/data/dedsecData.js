@@ -6,3 +6,38 @@ export const TICKER_ITEMS = [
   { label: "UPLINK", value: "STABLE 0.3ms LATENCY", highlight: false },
   { label: "TOKEN", value: "EXPIRES IN 14:58", highlight: true },
 ];
+
+export const FEATURES = [
+  {
+    seq: "F-01",
+    title: "ENCRYPTION",
+    desc: "Upload any file. Set parameters. Generate SHA-256 hash and AES-256-GCM encrypted output in seconds.",
+    accent: "#FF6200",
+    tag: "ENCRYPT_DATA",
+    class: "ds-badge-o",
+  },
+  {
+    seq: "F-02",
+    title: "CLOUD DRIVE",
+    desc: "Encrypted cloud storage. Every file hashed, signed, and stored with full audit trail.",
+    accent: "#00C8FF",
+    tag: "UPLOAD_DATA",
+    class: "ds-badge-c",
+  },
+  {
+    seq: "F-03",
+    title: "LIVE CHAT",
+    desc: "End-to-end encrypted channels. No logs. No metadata. Real-time secure communication.",
+    accent: "#FF0066",
+    tag: "CHAT_LIVE",
+    class: "ds-badge-m",
+  },
+  {
+    seq: "F-04",
+    title: "PROFILE",
+    desc: "Manage identity, clearance level, and access keys. Your operator dossier.",
+    accent: "#C9A84C",
+    tag: "SECURE_PROFILE",
+    class: "ds-badge-g",
+  },
+];
