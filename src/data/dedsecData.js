@@ -1,3 +1,10 @@
+import {
+  HouseIcon,
+  LockIcon,
+  DriveIcon,
+  ProfileIcon,
+  ChatIcon,
+} from "../svgs/PrimaryIcons.jsx";
 export const TICKER_ITEMS = [
   { label: "SYS.AUTH", value: "CREDENTIAL MODULE ACTIVE", highlight: true },
   { label: "ENCRYPTION", value: "AES-256-GCM ENGAGED", highlight: false },
@@ -14,6 +21,14 @@ export const MODULE_ACCENT = {
   chat: { color: "#FF0066", label: "MAGENTA" },
   profile: { color: "#C9A84C", label: "GOLD" },
 };
+
+export const NAV_ITEMS = [
+  { id: "home", label: "HOME", seq: "01", icon: HouseIcon },
+  { id: "encrypt", label: "ENCRYPTION", seq: "02", icon: LockIcon },
+  { id: "drive", label: "CLOUD DRIVE", seq: "03", icon: DriveIcon },
+  { id: "chat", label: "LIVE CHAT", seq: "04", icon: ChatIcon },
+  { id: "profile", label: "PROFILE", seq: "05", icon: ProfileIcon },
+];
 
 export const FEATURES = [
   {

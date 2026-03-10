@@ -20,10 +20,9 @@ const Hero = ({ color = "#FF6200", onEnter = () => {} }) => {
 
   return (
     <section className="relative flex flex-col justify-center h-max snap-start min-h-screen px-6 md:px-12 overflow-hidden">
-      {/* BG circuit lines */}
       <HeroBgSvg color={color} />
 
-      {/* Top-right corner info */}
+      {/* Top-right corner */}
       <div
         className="absolute top-6 right-6 text-right hidden md:block text-ui-xxs leading-[1.2rem]"
         style={{
@@ -118,7 +117,7 @@ const Hero = ({ color = "#FF6200", onEnter = () => {} }) => {
         </div>
       </div>
 
-      {/* Description */}
+      {/* Des */}
       <p
         className="text-muted mt-[2rem] max-w-[480px] font-family-mono text-[clamp(0.7rem,1.5vw,0.82rem)] tracking-[.06em] leading-[1.9]"
         style={{
@@ -171,7 +170,7 @@ const Hero = ({ color = "#FF6200", onEnter = () => {} }) => {
         </button>
       </div>
 
-      {/* Stat strip */}
+      {/* Stat strips */}
       <div
         className="flex flex-wrap gap-px mt-14 [@media(max-height:800px)]:hidden"
         style={{ animation: "ds-fadeup 0.6s 0.5s ease both" }}
