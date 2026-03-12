@@ -27,12 +27,12 @@ function App() {
     createRoutesFromElements(
       <Route path="/" element={<RootLayout />}>
         <Route index element={<HomePage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/drive" element={<DrivePage />} />
-        <Route path="/encrypt" element={<EncryptionPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/chat" element={<ChatPage />} />
-        <Route path="/*" element={<NotFound />} />
+        <Route path="login" element={<LoginPage />} />
+        <Route path="drive" element={<DrivePage />} />
+        <Route path="encrypt" element={<EncryptionPage />} />
+        <Route path="profile" element={<ProfilePage />} />
+        <Route path="chat" element={<ChatPage />} />
+        <Route path="*" element={<NotFound />} />
       </Route>,
     ),
   );

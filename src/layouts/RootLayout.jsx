@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Outlet, useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setAccent } from "../features/theme/themeSlice.js";
 
 import Sidebar from "../components/Sidebar.jsx";
@@ -10,11 +10,12 @@ import { MODULE_ACCENT } from "../data/dedsecData.js";
 const RootLayout = () => {
   const location = useLocation();
   const dispatch = useDispatch();
+  const ACCENT = useSelector((state) => state.theme.accent);
 
   const [open, setOpen] = useState(true);
-  const handleOpen = () => {
+  const handleOpen = useCallback(() => {
     setOpen((prev) => !prev);
-  };
+  }, []);
 
   useEffect(() => {
     const activeId = location.pathname.split("/")[1] || "home";
@@ -26,7 +27,8 @@ const RootLayout = () => {
     <div className="h-full w-full flex">
       {/* Sidebar for Pc screen Sidebar */}
       <div
-        className={`absolute z-[99] top-1/2 transforn -translate-y-1/2 py-1 left-0 bg-orange rounded-full border-solid cursor-pointer ${open ? "hidden" : "absolute"}`}
+        className={`absolute z-[99] top-1/2 transforn -translate-y-1/2 py-1 left-0 rounded-full border-solid cursor-pointer ${open ? "hidden" : "absolute"}`}
+        style={{ background: ACCENT }}
         onClick={handleOpen}
       >
         <ChevronRightIcon color={"black"} />
