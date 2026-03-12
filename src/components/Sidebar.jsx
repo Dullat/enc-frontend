@@ -1,4 +1,9 @@
 import { useState } from "react";
+import { NavLink } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+
+import { setAccent } from "../features/theme/themeSlice.js";
+
 import { CloseIcon } from "../svgs/PrimaryIcons.jsx";
 import { DedsecLogo } from "../svgs/DedsecLogo.jsx";
 
@@ -8,10 +13,12 @@ import { hexToRgb } from "../utils/hexToRgb.js";
 const Sidebar = ({
   open,
   handleOpen,
-  active = "profile",
+  active = "home",
   onNav = () => {},
   color = "orange",
 }) => {
+  const dispatch = useDispatch();
+  const ACCENT = useSelector((state) => state.theme.accent);
   return (
     <div
       className={`sticky bg-surface border-0 border-r-[1px] border-r-line top-0 ${
@@ -19,16 +26,17 @@ const Sidebar = ({
       } h-dvh transition-all duration-300 overflow-hidden`}
     >
       <div
-        className={`absolute top-0 right-0 z-[99] border-solid border border-t-0 border-r-0 border-orange py-1 rounded-full border-solid cursor-pointer px-2`}
+        className={`absolute top-0 right-0 z-[99] border-solid border border-t-0 border-r-0 py-1 rounded-full border-solid cursor-pointer px-2`}
+        style={{ color: ACCENT }}
         onClick={handleOpen}
       >
-        <CloseIcon />
+        <CloseIcon color={ACCENT} />
       </div>
       {/* Sidebar top area */}
       <div
         className={`flex gap-3 px-3 py-6 items-center border-0 border-b-[1px] border-b-line`}
       >
-        <DedsecLogo />
+        <DedsecLogo color={ACCENT} />
         <div className={`flex flex-col gap-[.03rem]`}>
           <div
             className={`font-family-display font-[900] tracking-[.25rem] text-white`}
@@ -44,32 +52,38 @@ const Sidebar = ({
       {/* Nav section */}
       <nav className={`flex flex-col w-full`}>
         {NAV_ITEMS.map((item) => {
-          const isActive = active === item.id;
-          const accent = MODULE_ACCENT[active].color;
           return (
-            <button
+            <NavLink
+              to={`${item.to}`}
               key={item.id}
               className={`flex gap-3 py-2 items-center cursor-pointer w-full px-3`}
-              style={{
+              style={({ isActive, isPending }) => ({
                 background: isActive
-                  ? `rgba(${hexToRgb(accent)},0.06)`
+                  ? `rgba(${hexToRgb(ACCENT)},0.06)`
                   : "transparent",
                 borderLeft: isActive
-                  ? `2px solid ${accent}`
+                  ? `2px solid ${ACCENT}`
                   : "2px solid transparent",
-              }}
+              })}
             >
-              <span style={{ color: isActive ? accent : "#252535" }}>
-                <item.icon size={20} color={isActive ? accent : "#252535"} />
-              </span>
-              <div
-                className={`flex-1 flex font-family-mono items-center`}
-                style={{ color: isActive ? accent : "#44445A" }}
-              >
-                <p className={`text-start text-[.9rem]`}>{item.label}</p>
-                <p className="text-ui-xs ml-auto">{item.seq}</p>
-              </div>
-            </button>
+              {({ isActive, isPending }) => (
+                <>
+                  <span style={{ color: isActive ? ACCENT : "#252535" }}>
+                    <item.icon
+                      size={20}
+                      color={isActive ? ACCENT : "#252535"}
+                    />
+                  </span>
+                  <div
+                    className={`flex-1 flex font-family-mono items-center`}
+                    style={{ color: isActive ? ACCENT : "#44445A" }}
+                  >
+                    <p className={`text-start text-[.9rem]`}>{item.label}</p>
+                    <p className="text-ui-xs ml-auto">{item.seq}</p>
+                  </div>
+                </>
+              )}
+            </NavLink>
           );
         })}
       </nav>

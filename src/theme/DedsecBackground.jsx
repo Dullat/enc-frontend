@@ -156,7 +156,7 @@ export default function DedsecBackground({
   return (
     <div
       ref={wrapRef}
-      className={`relative overflow-hidden bg-[#060608] ${className}`}
+      className={`relative overflow-hidden bg-[#060608] w-full ${className}`}
       style={{ isolation: "isolate" }}
     >
       {/* ── GRID ── */}

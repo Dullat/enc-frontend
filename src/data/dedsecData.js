@@ -23,11 +23,29 @@ export const MODULE_ACCENT = {
 };
 
 export const NAV_ITEMS = [
-  { id: "home", label: "HOME", seq: "01", icon: HouseIcon },
-  { id: "encrypt", label: "ENCRYPTION", seq: "02", icon: LockIcon },
-  { id: "drive", label: "CLOUD DRIVE", seq: "03", icon: DriveIcon },
-  { id: "chat", label: "LIVE CHAT", seq: "04", icon: ChatIcon },
-  { id: "profile", label: "PROFILE", seq: "05", icon: ProfileIcon },
+  { id: "home", label: "HOME", seq: "01", icon: HouseIcon, to: "/" },
+  {
+    id: "encrypt",
+    label: "ENCRYPTION",
+    seq: "02",
+    icon: LockIcon,
+    to: "encryption",
+  },
+  {
+    id: "drive",
+    label: "CLOUD DRIVE",
+    seq: "03",
+    icon: DriveIcon,
+    to: "drive",
+  },
+  { id: "chat", label: "LIVE CHAT", seq: "04", icon: ChatIcon, to: "chat" },
+  {
+    id: "profile",
+    label: "PROFILE",
+    seq: "05",
+    icon: ProfileIcon,
+    to: "profile",
+  },
 ];
 
 export const FEATURES = [
