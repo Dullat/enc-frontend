@@ -17,7 +17,7 @@ const Sidebar = ({ open, handleOpen, color = "orange" }) => {
   return (
     <div
       className={`sticky bg-surface border-0 border-r-[1px] border-r-line top-0 ${
-        open ? "w-[400px]" : "w-[0px]"
+        open ? "w-[280px]" : "w-[0px]"
       } h-dvh transition-all duration-300 overflow-hidden`}
     >
       <div

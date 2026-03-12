@@ -35,7 +35,9 @@ const RootLayout = () => {
       </div>
       {/* =============================== */}
 
-      <Sidebar open={open} handleOpen={handleOpen} />
+      <div className="flex-1">
+        <Sidebar open={open} handleOpen={handleOpen} />
+      </div>
       <Outlet />
     </div>
   );
