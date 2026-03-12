@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const Drive = () => {
+const DrivePage = () => {
   const ACCENT = useSelector((state) => state.theme.accent);
   return (
     <div
@@ -62,4 +62,4 @@ const Drive = () => {
   );
 };
 
-export default Drive;
+export default DrivePage;
