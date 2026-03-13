@@ -16,14 +16,14 @@ const Sidebar = ({ open, handleOpen, color = "orange" }) => {
 
   return (
     <div
-      className={`sticky bg-surface border-0 border-r-[1px] border-r-line top-0 ${
+      className={`bg-surface border-0 border-r-[1px] border-r-line top-0 sticky sm:sticky ${
         open ? "w-[280px]" : "w-[0px]"
       } h-dvh transition-all duration-300 overflow-hidden`}
     >
       <div
         className={`absolute top-0 right-0 z-[99] border-solid border border-t-0 border-r-0 py-1 rounded-full border-solid cursor-pointer px-2`}
         style={{ color: ACCENT }}
-        onClick={handleOpen}
+        onClick={() => handleOpen("hide")}
       >
         <CloseIcon color={ACCENT} />
       </div>

@@ -4,17 +4,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAccent } from "../features/theme/themeSlice.js";
 
 import Sidebar from "../components/Sidebar.jsx";
+import BottomNav from "../components/BottomNav.jsx";
+import useIsMobile from "../hooks/useIsMobile.jsx";
 import { ChevronRightIcon } from "../svgs/PrimaryIcons.jsx";
 import { MODULE_ACCENT } from "../data/dedsecData.js";
 
 const RootLayout = () => {
   const location = useLocation();
   const dispatch = useDispatch();
+  const isMobile = useIsMobile();
   const ACCENT = useSelector((state) => state.theme.accent);
 
   const [open, setOpen] = useState(true);
-  const handleOpen = useCallback(() => {
-    setOpen((prev) => !prev);
+  const handleOpen = useCallback((action) => {
+    if (action === "toggle") setOpen((prev) => !prev);
+    if (action === "hide") setOpen(false);
+    if (action === "show") setOpen(true);
   }, []);
 
   useEffect(() => {
@@ -23,21 +28,31 @@ const RootLayout = () => {
     if (accent) dispatch(setAccent(accent));
   }, [location.pathname, dispatch]);
 
-  return (
-    <div className="h-full w-full flex">
-      {/* Sidebar for Pc screen Sidebar */}
-      <div
-        className={`absolute z-[99] top-1/2 transforn -translate-y-1/2 py-1 left-0 rounded-full border-solid cursor-pointer ${open ? "hidden" : "absolute"}`}
-        style={{ background: ACCENT }}
-        onClick={handleOpen}
-      >
-        <ChevronRightIcon color={"black"} />
-      </div>
-      {/* =============================== */}
+  useEffect(() => {
+    console.log(isMobile);
+  }, [isMobile]);
 
-      <div className="flex-1">
-        <Sidebar open={open} handleOpen={handleOpen} />
-      </div>
+  return (
+    <div className="relative h-full w-full flex">
+      {/* Sidebar for Pc screen Sidebar */}
+      {!open && (
+        <div
+          className={`py-1 z-[4] transition-all rounded-full border-solid cursor-pointer ${isMobile ? "fixed bottom-0 left-1/2 transform -translate-x-1/2 -rotate-90" : "absolute top-1/2 transforn -translate-y-1/2 left-0"}`}
+          style={{ background: ACCENT }}
+          onClick={() => handleOpen("show")}
+        >
+          <ChevronRightIcon color={"black"} />
+        </div>
+      )}
+      {isMobile ? (
+        <BottomNav open={open} handleOpen={handleOpen} />
+      ) : (
+        <div className="flex-1 z-[5] hidden sm:flex">
+          <Sidebar open={open} handleOpen={handleOpen} />
+        </div>
+      )}
+
+      {/* =============================== */}
       <Outlet />
     </div>
   );
