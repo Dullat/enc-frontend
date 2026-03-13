@@ -78,7 +78,10 @@ const LoginPage = () => {
               className={`flex justify-between text-seq text-ui-sm text-[.58rem]`}
             >
               <p>DON'T HAVE AN ACCOUNT?</p>
-              <Link className="text-orange sm:text-muted hover:text-orange">
+              <Link
+                to="/register"
+                className="text-orange sm:text-muted hover:text-orange"
+              >
                 SING_UP
               </Link>
             </div>
