@@ -1,20 +1,38 @@
 import { useState, useEffect } from "react";
+import { useGetMeQuery, useLogoutMutation } from "../features/user/userApi.js";
 import { Link } from "react-router-dom";
 import { DedsecLogo } from "../svgs/DedsecLogo.jsx";
+import NotLoggedIn from "./NotLoggedIn.jsx";
+import UpdateUsernameForm from "../components/UpdateUsernameForm.jsx";
 import { useSelector } from "react-redux";
 
 const ProfilePage = () => {
   const [modal, setModal] = useState(""); // logout, delete modals
   const ACCENT = useSelector((state) => state.theme.accent);
 
+  const { data, isLoading, isError } = useGetMeQuery();
+  const [logout, { isLoading: logoutLoading }] = useLogoutMutation();
+
   const [deleteWord, setDeleteWord] = useState("");
   const [confirmDelete, setConfirmDelete] = useState(false);
 
+  const handleLogout = async () => {
+    try {
+      console.log("logging out");
+      const res = await logout().unwrap();
+      console.log(res, "logout seccessfull");
+      setModal("");
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const handleDeleteAccount = () => {};
 
   useEffect(() => {
     deleteWord === "delete" && setConfirmDelete(true);
   }, [deleteWord]);
+
+  if (!data?.user || isError) return <NotLoggedIn />;
 
   return (
     <div
@@ -23,7 +41,7 @@ const ProfilePage = () => {
     >
       {/* logout */}
       {modal === "logout" && (
-        <div className="fixed inset-0 p-4 !h-dvh flex items-center ds-backdrop z-[2] !backdrop-blur-[2px]">
+        <div className="fixed inset-0 z-[999] p-4 !h-dvh flex items-center ds-backdrop z-[2] !backdrop-blur-[2px]">
           <div className="ds-card p-6 py-8 max-w-[600px] m-auto">
             <div className="hud-tr hud-color-g"></div>
             <div className="hud-tl hud-color-g"></div>
@@ -44,17 +62,12 @@ const ProfilePage = () => {
             </p>
             <div className="flex items-center gap-2">
               <button
-                onClick={handleDeleteAccount}
+                onClick={handleLogout}
                 className={`ds-btn ds-btn-outline-g`}
               >
-                <span>LOG_OUT</span>
+                <span>{logoutLoading ? "Loggin_Out..." : "LOG_OUT"}</span>
               </button>
-              <button
-                onClick={() => {
-                  setModal(null);
-                }}
-                className="ds-btn"
-              >
+              <button onClick={() => setModal("")} className="ds-btn">
                 CANCEL
               </button>
             </div>
@@ -63,7 +76,7 @@ const ProfilePage = () => {
       )}
       {/* Delete modal */}
       {modal === "delete" && (
-        <div className="fixed inset-0 p-4 !h-dvh flex items-center top-0 ds-backdrop z-[2] !backdrop-blur-[2px]">
+        <div className="fixed inset-0 p-4 z-[999] !h-dvh flex items-center top-0 ds-backdrop z-[2] !backdrop-blur-[2px]">
           <div className="ds-card p-6 py-8 max-w-[600px] m-auto">
             <div className="hud-tr hud-color-m"></div>
             <div className="hud-tl hud-color-m"></div>
@@ -147,7 +160,7 @@ const ProfilePage = () => {
               className="text-display-sm text-[clamp(1rem,2vw,1.3rem)]"
               style={{ color: ACCENT }}
             >
-              OPERATOR_7
+              {data.user.username}
             </p>
             <div className="flex items-center gap-2">
               {/* <div className="ds-badge ds-badge-g py-[.2rem] px-[.4rem]"> */}
@@ -176,29 +189,35 @@ const ProfilePage = () => {
 
               <div className="flex flex-col w-full items-center gap-3">
                 <div className="flex items-center justify-between w-full">
-                  <p className="text-label">user_id</p>
-                  <p className="text-label">OPERATOR</p>
+                  <p className="text-label">USER_NAME</p>
+                  <p className="text-label">{data.user.username}</p>
                 </div>
                 <div className="flex items-center justify-between w-full">
-                  <p className="text-label">user_id</p>
-                  <p className="text-label">OPERATOR</p>
+                  <p className="text-label">EMAIL</p>
+                  <p className="text-label">{data.user.email}</p>
                 </div>
                 <div className="flex items-center justify-between w-full">
-                  <p className="text-label">user_id</p>
-                  <p className="text-label">OPERATOR</p>
+                  <p className="text-label">JOINED</p>
+                  <p className="text-label">
+                    {new Date(data.user.createdAt).toISOString().split("T")[0]}
+                  </p>
                 </div>
                 <div className="flex items-center justify-between w-full">
-                  <p className="text-label">user_id</p>
-                  <p className="text-label">OPERATOR</p>
+                  <p className="text-label">LAST_UPDATED</p>
+                  <p className="text-label">
+                    {new Date(data.user.updatedAt).toISOString().split("T")[0]}
+                  </p>
                 </div>
                 <div className="flex items-center justify-between w-full">
-                  <p className="text-label">user_id</p>
-                  <p className="text-label">OPERATOR</p>
+                  <p className="text-label">AUTH METHOD</p>
+                  <p className="text-label">
+                    {data.user.loginMethods.join("/")}
+                  </p>
                 </div>
-                <div className="flex items-center justify-between w-full">
-                  <p className="text-label">user_id</p>
-                  <p className="text-label">OPERATOR</p>
-                </div>
+                {/* <div className="flex items-center justify-between w-full"> */}
+                {/*   <p className="text-label">EMPTY</p> */}
+                {/*   <p className="text-label">EMPTY</p> */}
+                {/* </div> */}
               </div>
             </div>
             <div className="flex-1 ds-backdrop border border-[#18181f] px-6 py-6 flex-1">
@@ -206,26 +225,7 @@ const ProfilePage = () => {
                 <p className="text-label">03 // management</p>
                 <p style={{ color: ACCENT }}>EDIT PROFILE</p>
               </div>
-              <form onSubmit={() => {}} className="flex flex-col gap-4">
-                <div className="ds-field focus-within:[&_.label-inner]:!text-gold">
-                  <label
-                    className="ds-field-label label-inner"
-                    htmlFor="username"
-                  >
-                    USER_NAME
-                  </label>
-                  <input
-                    type="text"
-                    id="username"
-                    name="username"
-                    placeholder="xterm"
-                    className="ds-input !ds-input-g"
-                  />
-                </div>
-                <button type="submit" className="ds-btn ds-btn-outline-g">
-                  <spam>SAVE_CHANGE</spam>
-                </button>
-              </form>
+              <UpdateUsernameForm username={data.user.username} />
             </div>
           </div>
           <div className="flex flex-col flex-wrap w-full ds-backdrop border border-[#18181f] p-6">

@@ -1,17 +1,24 @@
 import { useState, useEffect } from "react";
-import { Form, Link } from "react-router-dom";
+import { Form, Link, useNavigate } from "react-router-dom";
 import DedsecBackground from "../theme/DedsecBackground.jsx";
 import { DedsecLogo } from "../svgs/DedsecLogo.jsx";
-
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  const formData = new FormData(e.target);
-  const email = await formData.get("email");
-  const password = await formData.get("password");
-  console.log(email, password);
-};
+import { useLoginMutation } from "../features/user/userApi.js";
 
 const LoginPage = () => {
+  const [login, { isLoading, isError, error }] = useLoginMutation();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const email = await formData.get("email");
+    const password = await formData.get("password");
+
+    try {
+      const user = await login({ email, password }).unwrap();
+      navigate("/profile");
+    } catch (error) {}
+  };
   return (
     <DedsecBackground glowRadius={120} glowStr={0.5}>
       <div

@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setAccent } from "../features/theme/themeSlice.js";
+import { useGetMeQuery } from "../features/user/userApi.js";
 
 import Sidebar from "../components/Sidebar.jsx";
 import BottomNav from "../components/BottomNav.jsx";
@@ -14,6 +15,8 @@ const RootLayout = () => {
   const dispatch = useDispatch();
   const isMobile = useIsMobile();
   const ACCENT = useSelector((state) => state.theme.accent);
+
+  const { data, isLoading } = useGetMeQuery();
 
   const [open, setOpen] = useState(true);
   const handleOpen = useCallback((action) => {
@@ -28,12 +31,13 @@ const RootLayout = () => {
     if (accent) dispatch(setAccent(accent));
   }, [location.pathname, dispatch]);
 
-  useEffect(() => {
-    console.log(isMobile);
-  }, [isMobile]);
-
   return (
     <div className="relative h-full w-full flex">
+      {isLoading && (
+        <div className="fixed inset-0 z-[999] ds-backdrop flex items-center justify-center">
+          <p>Loading..</p>
+        </div>
+      )}
       {/* Sidebar for Pc screen Sidebar */}
       {!open && (
         <div
