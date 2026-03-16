@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./app/store.js";
+import RequireAuth from "./hooks/useRequireAuth.jsx";
 
 import RootLayout from "./layouts/RootLayout.jsx";
 import HomePage from "./pages/HomePage.jsx";
@@ -30,13 +31,19 @@ function App() {
         <Route path="/" element={<RootLayout />}>
           <Route index element={<HomePage />} />
           <Route path="login" element={<LoginPage />} />
-          <Route path="drive" element={<DrivePage />} />
-          <Route path="encrypt" element={<EncryptionPage />} />
-          <Route path="profile" element={<ProfilePage />} />
-          <Route path="chat" element={<ChatPage />} />
+          <Route path="register" element={<RegisterPage />} />
+
+          {/* Protected routes */}
+          <Route element={<RequireAuth />}>
+            <Route path="drive" element={<DrivePage />} />
+            <Route path="encrypt" element={<EncryptionPage />} />
+            <Route path="profile" element={<ProfilePage />} />
+            <Route path="chat" element={<ChatPage />} />
+          </Route>
+          {/* ======================= */}
+
           <Route path="*" element={<NotFound />} />
         </Route>
-        <Route path="/register" element={<RegisterPage />} />
       </>,
     ),
   );

@@ -16,8 +16,6 @@ const RootLayout = () => {
   const isMobile = useIsMobile();
   const ACCENT = useSelector((state) => state.theme.accent);
 
-  const { data, isLoading } = useGetMeQuery();
-
   const [open, setOpen] = useState(true);
   const handleOpen = useCallback((action) => {
     if (action === "toggle") setOpen((prev) => !prev);
@@ -33,12 +31,7 @@ const RootLayout = () => {
 
   return (
     <div className="relative h-full w-full flex">
-      {isLoading && (
-        <div className="fixed inset-0 z-[999] ds-backdrop flex items-center justify-center">
-          <p>Loading..</p>
-        </div>
-      )}
-      {/* Sidebar for Pc screen Sidebar */}
+      {/* Sidebar for Pc screen and BottomNav for mobile screen */}
       {!open && (
         <div
           className={`py-1 z-[4] transition-all rounded-full border-solid cursor-pointer ${isMobile ? "fixed bottom-0 left-1/2 transform -translate-x-1/2 -rotate-90" : "absolute top-1/2 transforn -translate-y-1/2 left-0"}`}
