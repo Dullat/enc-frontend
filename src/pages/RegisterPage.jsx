@@ -45,7 +45,7 @@ const RegisterPage = () => {
     }
   };
   return (
-    <div className={`flex items-center justify-center min-h-dvh p-4`}>
+    <div className={`flex items-center w-full justify-center min-h-dvh p-4`}>
       <Form
         onSubmit={handleSubmit}
         className="relative ds-card px-8 py-10 flex flex-col gap-4 w-full max-w-[500px]"

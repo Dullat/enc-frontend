@@ -53,6 +53,12 @@ const userApi = userApiBase.injectEndpoints({
         }
       },
     }),
+    getSessions: builder.query({
+      query: () => ({
+        url: "auth/get-sessions",
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -62,5 +68,6 @@ export const {
   useLogoutMutation,
   useUpdateUsernameMutation,
   useForgetPassMutation,
+  useGetSessionsQuery,
 } = userApi;
 export default userApi;

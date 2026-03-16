@@ -5,6 +5,7 @@ import { DedsecLogo } from "../svgs/DedsecLogo.jsx";
 import NotLoggedIn from "./NotLoggedIn.jsx";
 import UpdateUsernameForm from "../components/UpdateUsernameForm.jsx";
 import ForgetPassword from "../components/ForgetPassword.jsx";
+import UserSessions from "../components/UserSessions.jsx";
 import { useSelector } from "react-redux";
 
 const ProfilePage = () => {
@@ -113,7 +114,8 @@ const ProfilePage = () => {
                 marginBottom: "1.2rem",
               }}
             >
-              TYPE YOUR USERNAME TO CONFIRM:
+              {/* TYPE YOUR USERNAME TO CONFIRM: */}
+              TYPE "DELETE" TO CONFIRM
             </p>
             <div className="ds-field focus-within:[&_.delete-class]:!text-magenta">
               <label
@@ -136,7 +138,8 @@ const ProfilePage = () => {
             >
               <button
                 onClick={handleDeleteAccount}
-                disabled={deleteWord !== "delete"}
+                // disabled={deleteWord !== "delete"}
+                disabled={true}
                 className={`ds-btn ds-btn-outline-m ${deleteWord === "delete" ? "opacity-100" : "opacity-30 pointer-events-none"}`}
               >
                 <span>DELETE</span>
@@ -151,6 +154,11 @@ const ProfilePage = () => {
                 CANCEL
               </button>
             </div>
+            <p className="!text-orange text-label mt-2">
+              <span className="text-red-700 font-[600]">Dev_note:</span>deletion
+              is not allowed for now, for testing purposes, pressing delete btn
+              wont do anyting for now
+            </p>
           </div>
         </div>
       )}
@@ -270,6 +278,7 @@ const ProfilePage = () => {
               </div>
             </div>
           </div>
+          <UserSessions ACCENT={ACCENT} />
           <div className="flex flex-wrap items-end justify-between gap-4 ds-backdrop border border-[#18181f] p-6 w-full">
             <div className="flex flex-col max-w-[700px]">
               <p className="text-label text-magenta opacity-40">
