@@ -38,6 +38,21 @@ const userApi = userApiBase.injectEndpoints({
       }),
       invalidatesTags: ["user"],
     }),
+    forgetPass: builder.mutation({
+      query: (email) => ({
+        url: "auth/forget-password",
+        method: "POST",
+        body: { email },
+      }),
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          await dispatch(userApiBase.endpoints.logout.initiate()).unwrap();
+        } catch (err) {
+          console.log(err);
+        }
+      },
+    }),
   }),
 });
 
@@ -46,5 +61,6 @@ export const {
   useGetMeQuery,
   useLogoutMutation,
   useUpdateUsernameMutation,
+  useForgetPassMutation,
 } = userApi;
 export default userApi;

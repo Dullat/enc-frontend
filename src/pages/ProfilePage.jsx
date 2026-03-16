@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { DedsecLogo } from "../svgs/DedsecLogo.jsx";
 import NotLoggedIn from "./NotLoggedIn.jsx";
 import UpdateUsernameForm from "../components/UpdateUsernameForm.jsx";
+import ForgetPassword from "../components/ForgetPassword.jsx";
 import { useSelector } from "react-redux";
 
 const ProfilePage = () => {
@@ -39,6 +40,9 @@ const ProfilePage = () => {
       className="relative flex flex-col items-center justify-center w-full"
       style={{ minHeight: "100vh", padding: "2rem" }}
     >
+      {modal === "forget-pass" && (
+        <ForgetPassword email={data.user.email} setModal={setModal} />
+      )}
       {/* logout */}
       {modal === "logout" && (
         <div className="fixed inset-0 z-[999] p-4 !h-dvh flex items-center ds-backdrop z-[2] !backdrop-blur-[2px]">
@@ -243,8 +247,11 @@ const ProfilePage = () => {
                   </div>
                   <p className="text-label block">THROUGH EMAIL</p>
                 </div>
-                <button className="ds-btn ds-btn-outline-o !py-[.5rem] !px-[1rem]">
-                  <span>RESET_PASS</span>
+                <button
+                  className="ds-btn ds-btn-outline-o !py-[.5rem] !px-[1rem]"
+                  onClick={() => setModal("forget-pass")}
+                >
+                  <span>FORGET_PASS</span>
                 </button>
               </div>
               <div className="flex items-center justify-between flex-wrap ">
