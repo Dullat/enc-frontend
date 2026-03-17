@@ -18,6 +18,7 @@ import ProfilePage from "./pages/ProfilePage.jsx";
 import EncryptionPage from "./pages/EncryptionPage.jsx";
 import ChatPage from "./pages/ChatPage.jsx";
 import NotFound from "./pages/NotFound.jsx";
+import RequestEmailVerificationPage from "./pages/RequestEmailVerificationPage.jsx";
 
 import DedsecBackground from "./theme/DedsecBackground.jsx";
 import Ticker from "./theme/Ticker.jsx";
@@ -44,6 +45,7 @@ function App() {
 
           <Route path="*" element={<NotFound />} />
         </Route>
+        <Route path="/req-email" element={<RequestEmailVerificationPage />} />
       </>,
     ),
   );

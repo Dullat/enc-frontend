@@ -66,6 +66,13 @@ const userApi = userApiBase.injectEndpoints({
         method: "GET",
       }),
     }),
+    requestEmailVerification: builder.mutation({
+      query: (email) => ({
+        url: "auth/resend-verification",
+        method: "POST",
+        body: { email },
+      }),
+    }),
   }),
 });
 
@@ -77,5 +84,6 @@ export const {
   useUpdateUsernameMutation,
   useForgetPassMutation,
   useGetSessionsQuery,
+  useRequestEmailVerificationMutation,
 } = userApi;
 export default userApi;

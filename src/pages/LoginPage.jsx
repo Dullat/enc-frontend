@@ -87,7 +87,7 @@ const LoginPage = () => {
             type="submit"
             className="ds-scanlines !relative ds-btn ds-btn-outline-o"
           >
-            <span>submit</span>
+            <span>{isLoading ? "LOGGING_IN..." : "LOG_IN"}</span>
           </button>
           <div className="flex flex-col">
             <div className="ds-divider mb-3"></div>
