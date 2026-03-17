@@ -10,6 +10,13 @@ const userApi = userApiBase.injectEndpoints({
       }),
       invalidatesTags: ["user"],
     }),
+    register: builder.mutation({
+      query: ({ username, email, password }) => ({
+        url: "auth/register",
+        method: "POST",
+        body: { username, email, password },
+      }),
+    }),
     getMe: builder.query({
       query: () => ({
         url: "auth/getme",
@@ -64,6 +71,7 @@ const userApi = userApiBase.injectEndpoints({
 
 export const {
   useLoginMutation,
+  useRegisterMutation,
   useGetMeQuery,
   useLogoutMutation,
   useUpdateUsernameMutation,

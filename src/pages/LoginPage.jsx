@@ -2,10 +2,11 @@ import { useState, useEffect } from "react";
 import { Form, Link, useNavigate } from "react-router-dom";
 import DedsecBackground from "../theme/DedsecBackground.jsx";
 import { DedsecLogo } from "../svgs/DedsecLogo.jsx";
-import { useLoginMutation } from "../features/user/userApi.js";
+import { useLoginMutation, useGetMeQuery } from "../features/user/userApi.js";
 
 const LoginPage = () => {
   const [login, { isLoading, isError, error }] = useLoginMutation();
+  const { data, isLoading: userLoading } = useGetMeQuery();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -19,6 +20,10 @@ const LoginPage = () => {
       navigate("/profile");
     } catch (error) {}
   };
+
+  useEffect(() => {
+    data?.user && navigate("/profile");
+  }, [userLoading, data]);
   return (
     <DedsecBackground glowRadius={120} glowStr={0.5}>
       <div
@@ -73,6 +78,11 @@ const LoginPage = () => {
             </label>
             <input type="password" name="password" className="ds-input" />
           </div>
+          {isError && (
+            <div className="text-label !text-red-600">
+              Error: {error.data.message}
+            </div>
+          )}
           <button
             type="submit"
             className="ds-scanlines !relative ds-btn ds-btn-outline-o"

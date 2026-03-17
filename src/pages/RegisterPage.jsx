@@ -1,11 +1,23 @@
 import { useState, useEffect, useRef } from "react";
-import { Form, Link } from "react-router-dom";
+import {
+  useGetMeQuery,
+  useRegisterMutation,
+} from "../features/user/userApi.js";
+import { Form, Link, useNavigate } from "react-router-dom";
 import { DedsecLogo } from "../svgs/DedsecLogo.jsx";
+import CustomMessagePage from "../pages/CustomMessagePage.jsx";
+
 const RegisterPage = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
+  const [registered, setRegistered] = useState(false);
+
+  const [register, { isLoading: regLoading, isError, isSuccess, error }] =
+    useRegisterMutation();
+  const { data, isLoading } = useGetMeQuery();
+  const navigate = useNavigate();
 
   const isNameValid =
     name.trim().length === 0
@@ -16,7 +28,7 @@ const RegisterPage = () => {
     email.trim().length === 0 ? null : /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const isPassLength =
-    password.trim().length >= 4 && password.trim().length <= 32;
+    password.trim().length >= 8 && password.trim().length <= 32;
 
   const isPassDigit = /[0-9]/.test(password);
 
@@ -32,7 +44,7 @@ const RegisterPage = () => {
   const isPassMatch =
     confirm.trim().length === 0 ? null : confirm.trim() === password.trim();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (
       isNameValid &&
@@ -41,9 +53,30 @@ const RegisterPage = () => {
       isPassValid &&
       isPassMatch
     ) {
-      console.log("logging in");
+      try {
+        await register({ username: name, email, password }).unwrap();
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
+
+  useEffect(() => {
+    data?.user && navigate("/profile");
+  }, [isLoading, data]);
+  useEffect(() => {
+    if (isSuccess) setRegistered(true);
+  }, [isSuccess]);
+
+  if (isSuccess)
+    return (
+      <CustomMessagePage
+        type={"EMAIL"}
+        message={"An email has been sent, please verify your accout first"}
+        to={"/login"}
+        btnText={"LOG_IN"}
+      />
+    );
   return (
     <div className={`flex items-center w-full justify-center min-h-dvh p-4`}>
       <Form
@@ -160,8 +193,23 @@ const RegisterPage = () => {
             onChange={(e) => setConfirm(e.currentTarget.value)}
           />
         </div>
-        <button type="submit" className="ds-btn ds-btn-outline-o">
-          <span>SUBMIT</span>
+        {isError && (
+          <div className="text-label !text-red-600">
+            Error: {error.data.message}
+          </div>
+        )}
+        <button
+          type="submit"
+          className={`ds-btn ds-btn-outline-o opacity-30 pointer-events-none ${
+            isNameValid &&
+            isPassValid &&
+            isEmailValid &&
+            isPassValid &&
+            isPassMatch &&
+            "opacity-100 !pointer-events-auto"
+          }`}
+        >
+          <span>{regLoading ? "SUBMITTING...." : "SUBMIT"}</span>
         </button>
         <div className="flex flex-col">
           <div className="ds-divider mb-3"></div>

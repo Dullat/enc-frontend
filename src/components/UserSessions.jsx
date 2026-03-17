@@ -30,9 +30,9 @@ const UserSessions = ({ ACCENT }) => {
       </div>
       <div className="flex flex-col gap-1 w-full">
         <div className="w-full flex items-center justify-between">
-          <p className="text-label" style={{ color: ACCENT }}>
-            IP
-          </p>
+          {/* <p className="text-label" style={{ color: ACCENT }}> */}
+          {/*   IP */}
+          {/* </p> */}
           <p className="text-label" style={{ color: ACCENT }}>
             Browser/os
           </p>
@@ -48,9 +48,12 @@ const UserSessions = ({ ACCENT }) => {
           </p>
         ) : (
           isSuccess &&
-          sessions.map((session) => (
-            <div className="w-full flex items-center justify-between">
-              <p className="text-label">{session.ip}</p>
+          sessions.map((session, index) => (
+            <div
+              key={session.ip + index}
+              className="w-full flex items-center justify-between"
+            >
+              {/* <p className="text-label">{session.ip}</p> */}
               <p className="text-label">
                 {session.browser}
                 {"/"}
