@@ -4,7 +4,7 @@ import { hexToRgb } from "../utils/hexToRgb.js";
 
 const FeaturesSection = () => {
   return (
-    <div className="w-full min-h-dvh snap-start px-2 md:px-12 flex py-4">
+    <div className="w-full min-h-screen snap-start snap-always will-change-transform px-2 md:px-12 flex py-4 pb-20">
       <div className="my-auto">
         <div className={`text-seq mb-3 font-family-mono`}>
           SEQ:0x0010 // MODULES

@@ -23,7 +23,7 @@ const UserSessions = ({ ACCENT }) => {
   return (
     <div className=" relative backdrop-blur-sm border border-[#18181f] ds-backdrop px-6 py-6 flex-1">
       <div className="overflow-hidden">
-        <p className="text-label">04 // DEVICES YOU LOGGED_IN</p>
+        <p className="text-seq">04 // DEVICES YOU LOGGED_IN</p>
         <p className="text-display-sm mb-4" style={{ color: ACCENT }}>
           USER SESSIONS
         </p>

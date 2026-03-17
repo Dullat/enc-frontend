@@ -4,7 +4,7 @@ import FeaturesSection from "../components/FeaturesSection.jsx";
 
 const HomePage = () => {
   return (
-    <div className="h-dvh overflow-y-scroll w-full snap-y snap-mandatory scroll-container scroll-container">
+    <div className="h-dvh overflow-y-scroll w-full snap-y snap-mandatory scroll scroll-container">
       <Hero />
       <TeaserSection />
       <FeaturesSection />

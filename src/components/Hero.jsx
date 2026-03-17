@@ -19,7 +19,7 @@ const Hero = ({ color = "#FF6200", onEnter = () => {} }) => {
   }, []);
 
   return (
-    <section className="relative flex flex-col justify-center h-max snap-start min-h-screen px-6 md:px-12 overflow-hidden">
+    <section className="relative flex flex-col justify-center h-max snap-start snap-always will-change-transform min-h-screen px-6 md:px-12 overflow-hidden">
       <HeroBgSvg color={color} />
 
       {/* Top-right corner */}

@@ -34,7 +34,7 @@ const RootLayout = () => {
       {/* Sidebar for Pc screen and BottomNav for mobile screen */}
       {!open && (
         <div
-          className={`py-1 z-[4] transition-all rounded-full border-solid cursor-pointer ${isMobile ? "fixed bottom-0 left-1/2 transform -translate-x-1/2 -rotate-90" : "absolute top-1/2 transforn -translate-y-1/2 left-0"}`}
+          className={`py-1 z-[4] transition-all rounded-full border-solid cursor-pointer ${isMobile ? "!hidden" : "absolute top-1/2 transforn -translate-y-1/2 left-0"}`}
           style={{ background: ACCENT }}
           onClick={() => handleOpen("show")}
         >
@@ -42,7 +42,7 @@ const RootLayout = () => {
         </div>
       )}
       {isMobile ? (
-        <BottomNav open={open} handleOpen={handleOpen} />
+        <BottomNav open={true} handleOpen={handleOpen} />
       ) : (
         <div className="flex-1 z-[5] hidden sm:flex">
           <Sidebar open={open} handleOpen={handleOpen} />

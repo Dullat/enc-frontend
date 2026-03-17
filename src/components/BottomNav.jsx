@@ -7,54 +7,54 @@ import { useSelector } from "react-redux";
 
 const BottomNav = ({ open, handleOpen, color = "#FFF" }) => {
   const ACCENT = useSelector((state) => state.theme.accent);
-  const lastScrollY = useRef(0);
+  // const lastScrollY = useRef(0);
   const openRef = useRef(open);
-  const timerRef = useRef(null);
+  // const timerRef = useRef(null);
 
   const location = useLocation();
-  useEffect(() => {
-    openRef.current = open;
-  }, [open]);
-
-  useEffect(() => {
-    const scrollContainer = document.querySelector(".scroll-container");
-    const target = scrollContainer || window;
-    const getScrollY = () =>
-      scrollContainer ? scrollContainer.scrollTop : window.scrollY;
-
-    const handleScroll = () => {
-      const currentScrollY = getScrollY();
-
-      if (currentScrollY > lastScrollY.current) {
-        if (timerRef.current) clearTimeout(timerRef.current);
-        if (openRef.current) handleOpen("hide");
-      } else if (currentScrollY < lastScrollY.current) {
-        if (!openRef.current) handleOpen("show");
-        setTimer();
-      }
-
-      lastScrollY.current = currentScrollY;
-    };
-
-    const setTimer = () => {
-      if (timerRef.current) {
-        clearTimeout(timerRef.current);
-      }
-      timerRef.current = setTimeout(() => {
-        if (openRef.current) handleOpen("hide");
-      }, 4000);
-    };
-    target.addEventListener("scroll", handleScroll, { passive: true });
-
-    return () => {
-      if (timerRef.current) clearTimeout(timerRef.current);
-      target.removeEventListener("scroll", handleScroll);
-    };
-  }, [location.pathname]);
+  // useEffect(() => {
+  //   openRef.current = open;
+  // }, [open]);
+  //
+  // useEffect(() => {
+  //   const scrollContainer = document.querySelector(".scroll-container");
+  //   const target = scrollContainer || window;
+  //   const getScrollY = () =>
+  //     scrollContainer ? scrollContainer.scrollTop : window.scrollY;
+  //
+  //   const handleScroll = () => {
+  //     const currentScrollY = getScrollY();
+  //
+  //     if (currentScrollY > lastScrollY.current) {
+  //       if (timerRef.current) clearTimeout(timerRef.current);
+  //       if (openRef.current) handleOpen("hide");
+  //     } else if (currentScrollY < lastScrollY.current) {
+  //       if (!openRef.current) handleOpen("show");
+  //       setTimer();
+  //     }
+  //
+  //     lastScrollY.current = currentScrollY;
+  //   };
+  //
+  //   const setTimer = () => {
+  //     if (timerRef.current) {
+  //       clearTimeout(timerRef.current);
+  //     }
+  //     timerRef.current = setTimeout(() => {
+  //       if (openRef.current) handleOpen("hide");
+  //     }, 4000);
+  //   };
+  //   target.addEventListener("scroll", handleScroll, { passive: true });
+  //
+  //   return () => {
+  //     if (timerRef.current) clearTimeout(timerRef.current);
+  //     target.removeEventListener("scroll", handleScroll);
+  //   };
+  // }, [location.pathname]);
   return (
     <div
-      className="fixed bottom-0 w-full z-[1] bg-surface overflow-hidden transition-all"
-      style={{ height: open ? "60px" : "0px" }}
+      className="fixed bottom-0 w-full z-[99] bg-surface overflow-hidden transition-all"
+      style={{ height: open ? "70px" : "0px" }}
     >
       <nav className="w-full flex items-center h-full border-0 border-t-1 border-t-line">
         {NAV_ITEMS.map((item) => (

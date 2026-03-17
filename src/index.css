@@ -28,6 +28,7 @@
   --text-white:     #F2F2FA;
   --text-body:      #C4C4D4;
   --text-muted:     #44445A;
+  --text-muted-2:   #ACACAF;
   --text-ghost:     #1e1e2a;
 
   /* Fonts */
@@ -64,6 +65,7 @@
   --color-ds-white:    var(--text-white);
   --color-body:        var(--text-body);
   --color-muted:       var(--text-muted);
+  --color-muted2:       var(--text-muted-2);
   --color-ghost:       var(--text-ghost);
 
   --font-family-display: var(--font-display);
@@ -156,10 +158,10 @@ body {
 
 @utility text-label {
   font-family: var(--font-mono);
-  font-size: 0.58rem;
+  font-size: 0.6rem;
   letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--color-muted2);
 }
 @utility text-seq {
   font-family: var(--font-mono);
@@ -167,6 +169,12 @@ body {
   letter-spacing: 0.3em;
   text-transform: uppercase;
   color: var(--text-muted);
+}
+
+@utility text-pera {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: .3em;
 }
 
 

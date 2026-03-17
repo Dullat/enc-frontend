@@ -37,10 +37,7 @@ const ProfilePage = () => {
   if (!data?.user || isError) return <NotLoggedIn />;
 
   return (
-    <div
-      className="relative flex flex-col items-center justify-center w-full"
-      style={{ minHeight: "100vh", padding: "2rem" }}
-    >
+    <div className="relative flex flex-col items-center justify-center w-full min-h-dvh p-4 pb-20 sm:pb-6 sm:p-6">
       {modal === "forget-pass" && (
         <ForgetPassword email={data.user.email} setModal={setModal} />
       )}
@@ -164,7 +161,7 @@ const ProfilePage = () => {
       )}
       {/* =================== */}
       <div className="max-w-[1200px] w-full m-auto ">
-        <p className="text-label mb-2">MODULE_05 // PROFILE</p>
+        <p className="text-seq mb-2">MODULE_05 // PROFILE</p>
         <div className="flex items-center gap-2 mb-6">
           <DedsecLogo color={ACCENT} size={60} />
           <div className="">
@@ -191,7 +188,7 @@ const ProfilePage = () => {
         <div className="flex flex-col gap-2">
           <div className="flex flex-col md:flex-row gap-2">
             <div className=" relative backdrop-blur-sm border border-[#18181f] ds-backdrop px-6 py-6 flex-1">
-              <p className="text-label ">01 // IDENTITY</p>
+              <p className="text-seq ">01 // IDENTITY</p>
               <h1
                 className="text-display-sm !text-mono mb-4"
                 style={{ color: ACCENT }}
@@ -234,7 +231,7 @@ const ProfilePage = () => {
             </div>
             <div className="flex-1 ds-backdrop border border-[#18181f] px-6 py-6 flex-1">
               <div className="text-display-sm mb-4">
-                <p className="text-label">03 // management</p>
+                <p className="text-seq">02 // management</p>
                 <p style={{ color: ACCENT }}>EDIT PROFILE</p>
               </div>
               <UpdateUsernameForm username={data.user.username} />
@@ -242,7 +239,7 @@ const ProfilePage = () => {
           </div>
           <div className="flex flex-col flex-wrap w-full ds-backdrop border border-[#18181f] p-6">
             <div className="overflow-hidden">
-              <p className="text-label">03 // SECURITY</p>
+              <p className="text-seq">04 // SECURITY</p>
               <p className="text-display-sm mb-4" style={{ color: ACCENT }}>
                 SECURITY CONTROLLS
               </p>
@@ -256,7 +253,7 @@ const ProfilePage = () => {
                   <p className="text-label block">THROUGH EMAIL</p>
                 </div>
                 <button
-                  className="ds-btn ds-btn-outline-o !py-[.5rem] !px-[1rem]"
+                  className="ds-btn ds-btn-outline-o !py-[.5rem] !px-[1rem] ml-auto"
                   onClick={() => setModal("forget-pass")}
                 >
                   <span>FORGET_PASS</span>
@@ -281,13 +278,13 @@ const ProfilePage = () => {
           <UserSessions ACCENT={ACCENT} />
           <div className="flex flex-wrap items-end justify-between gap-4 ds-backdrop border border-[#18181f] p-6 w-full">
             <div className="flex flex-col max-w-[700px]">
-              <p className="text-label text-magenta opacity-40">
-                04 // Danger_Zone
+              <p className="text-seq text-magenta opacity-40">
+                06 // Danger_Zone
               </p>
               <h3 className="text-display-sm text-magenta">
                 TERMINATE ACCOUNT
               </h3>
-              <p className="text-magenta font-family-mono text-[.65rem]">
+              <p className="text-magenta font-family-mono text-[.70rem]">
                 Permanently delete this operator account. All files, encryption
                 keys, and active channels will be wiped from all nodes.{" "}
                 <b>This action cannot be undone.</b>

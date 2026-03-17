@@ -50,7 +50,7 @@ const TeaserSection = ({ studio = false }) => {
   return (
     <div
       style={{ cursor: muted ? cursorUnmute : cursorMute }}
-      className="relative z-0 isolate overflow-hidden bg-void w-full sm:min-h-[600px] h-dvh snap-start flex items-center justify-center"
+      className="relative z-0 isolate overflow-hidden bg-void w-full sm:min-h-[600px] h-full snap-start snap-always will-change-transform flex items-center justify-center"
     >
       {/* onMouseLeave={() => handlePlay("pause")} */}
       {/* onMouseEnter={() => handlePlay("play")} */}
@@ -76,6 +76,7 @@ const TeaserSection = ({ studio = false }) => {
         className="ds-scanlines absolute inset-0 z-[3] transform-gpu"
         onClick={handleUnmute}
       />
+      <div className="absolute inset-0 backdrop-blur-[3px] bg-[rgba(0,0,0,.5)] z-[3]"></div>
 
       <div className="absolute inset-4 z-[4] pointer-events-none cursor-auto">
         <div className="hud-tl" />
@@ -127,13 +128,13 @@ const TeaserSection = ({ studio = false }) => {
       {/*   </div> */}
       {/* </div> */}
 
-      <div className="absolute bottom-8 right-6 z-[10] flex flex-col items-end cursor-auto">
-        <span className="text-label mb-1">LOCAL_TIME</span>
-        <span className="text-stat-sm text-orange opacity-50">
-          {Date().split(" ").slice(0, 5).join(" ")}
-        </span>
-        <span className="text-ui-xxs text-muted mt-1">TZ: GL // "!SYNCED"</span>
-      </div>
+      {/* <div className="absolute bottom-8 right-6 z-[10] flex flex-col items-end cursor-auto"> */}
+      {/*   <span className="text-label mb-1">LOCAL_TIME</span> */}
+      {/*   <span className="text-stat-sm text-orange opacity-50"> */}
+      {/*     {Date().split(" ").slice(0, 5).join(" ")} */}
+      {/*   </span> */}
+      {/*   <span className="text-ui-xxs text-muted mt-1">TZ: GL // "!SYNCED"</span> */}
+      {/* </div> */}
 
       <div className="relative z-[20] flex flex-col items-center gap-6 mt-10 pointer-events-auto cursor-auto">
         {!studio ? (
