@@ -73,17 +73,16 @@ const TeaserSection = ({ studio = false }) => {
       />
       <div className="ds-vignette absolute inset-0 z-[2] pointer-events-none transform-gpu" />
       <div
-        className="ds-scanlines absolute inset-0 z-[3] transform-gpu"
+        className=" absolute inset-0 z-[3] transform-gpu bg-[rgba(255,255,255,.2)]"
         onClick={handleUnmute}
       />
-      <div className="absolute inset-0 backdrop-blur-[3px] bg-[rgba(0,0,0,.5)] z-[3]"></div>
 
-      <div className="absolute inset-4 z-[4] pointer-events-none cursor-auto">
-        <div className="hud-tl" />
-        <div className="hud-tr" />
-        <div className="hud-bl" />
-        <div className="hud-br" />
-      </div>
+      {/* <div className="absolute inset-4 z-[4] pointer-events-none cursor-auto"> */}
+      {/*   <div className="hud-tl" /> */}
+      {/*   <div className="hud-tr" /> */}
+      {/*   <div className="hud-bl" /> */}
+      {/*   <div className="hud-br" /> */}
+      {/* </div> */}
 
       {/* <div className="absolute top-6 left-6 z-[10] flex flex-col gap-2"> */}
       {/*   <div> */}

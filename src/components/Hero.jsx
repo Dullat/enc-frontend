@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import HeroBgSvg from "../svgs/HeroBgSvg.jsx";
+import HeroBgSvgMobile from "../svgs/HeroBgSvgMobile.jsx";
+import useIsMobile from "../hooks/useIsMobile.jsx";
 import { hexToRgb } from "../utils/hexToRgb.js";
 
 const Hero = ({ color = "#FF6200", onEnter = () => {} }) => {
@@ -13,6 +15,8 @@ const Hero = ({ color = "#FF6200", onEnter = () => {} }) => {
     { num: "99.90%", label: "UPTIME", accent: "#00E87A" },
   ];
 
+  const isMobile = useIsMobile();
+
   useEffect(() => {
     const t = setInterval(() => setTick((p) => (p + 1) % PHRASES.length), 2200);
     return () => clearInterval(t);
@@ -20,7 +24,11 @@ const Hero = ({ color = "#FF6200", onEnter = () => {} }) => {
 
   return (
     <section className="relative flex flex-col justify-center h-max snap-start snap-always will-change-transform min-h-screen px-6 md:px-12 overflow-hidden">
-      <HeroBgSvg color={color} />
+      {isMobile ? (
+        <HeroBgSvgMobile color={color} />
+      ) : (
+        <HeroBgSvg color={color} />
+      )}
 
       {/* Top-right corner */}
       <div

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Form, Link, useNavigate } from "react-router-dom";
-import DedsecBackground from "../theme/DedsecBackground.jsx";
+import DedsecBg from "../theme/DedsecBg.jsx";
 import { DedsecLogo } from "../svgs/DedsecLogo.jsx";
 import { useLoginMutation, useGetMeQuery } from "../features/user/userApi.js";
 
@@ -25,7 +25,7 @@ const LoginPage = () => {
     data?.user && navigate("/profile");
   }, [userLoading, data]);
   return (
-    <DedsecBackground glowRadius={120} glowStr={0.5}>
+    <DedsecBg glowRadius={120} glowStr={0.5}>
       <div
         className={`relative w-full min-h-dvh flex items-center justify-center px-4`}
       >
@@ -111,7 +111,7 @@ const LoginPage = () => {
           </div>
         </Form>
       </div>
-    </DedsecBackground>
+    </DedsecBg>
   );
 };
 

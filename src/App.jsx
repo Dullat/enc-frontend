@@ -20,7 +20,6 @@ import ChatPage from "./pages/ChatPage.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import RequestEmailVerificationPage from "./pages/RequestEmailVerificationPage.jsx";
 
-import DedsecBackground from "./theme/DedsecBackground.jsx";
 import Ticker from "./theme/Ticker.jsx";
 
 function App() {
@@ -29,11 +28,10 @@ function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <>
+        <Route path="login" element={<LoginPage />} />
+        <Route path="register" element={<RegisterPage />} />
         <Route path="/" element={<RootLayout />}>
           <Route index element={<HomePage />} />
-          <Route path="login" element={<LoginPage />} />
-          <Route path="register" element={<RegisterPage />} />
-
           {/* Protected routes */}
           <Route element={<RequireAuth />}>
             <Route path="drive" element={<DrivePage />} />
