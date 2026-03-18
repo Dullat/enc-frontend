@@ -56,12 +56,14 @@ const TeaserSection = ({ studio = false }) => {
       {/* onMouseEnter={() => handlePlay("play")} */}
       <video
         ref={video}
-        autoPlay
+        preload={"auto"}
+        poster="/videos/bigBrother-poster.png"
+        // autoPlay
         loop
         muted={muted}
         playsInline
         className="absolute inset-0 w-full h-full object-cover z-0
-        brightness-[1.24] contrast-[1.7]"
+        brightness-[1.24] contrast-[1.7] transition-opacity duration-700"
         // saturate-[1.5] hue-rotate-[10deg]
       >
         <source src="/videos/bigBrother.mp4" type="video/mp4" />
@@ -73,7 +75,7 @@ const TeaserSection = ({ studio = false }) => {
       />
       <div className="ds-vignette absolute inset-0 z-[2] pointer-events-none transform-gpu" />
       <div
-        className=" absolute inset-0 z-[3] transform-gpu bg-[rgba(255,255,255,.2)]"
+        className=" absolute inset-0 z-[3] transform-gpu bg-[rgba(255,255,255,.0)] backdrop-blur-[3px]"
         onClick={handleUnmute}
       />
 
