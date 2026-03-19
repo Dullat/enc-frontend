@@ -29,7 +29,7 @@ export const NAV_ITEMS = [
     label: "ENCRYPTION",
     seq: "02",
     icon: LockIcon,
-    to: "encrypt",
+    to: "encryption",
   },
   {
     id: "drive",

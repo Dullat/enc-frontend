@@ -163,6 +163,11 @@ body {
   text-transform: uppercase;
   color: var(--color-muted2);
 }
+
+@utility text-lower {
+  text-transform: none;
+}
+
 @utility text-seq {
   font-family: var(--font-mono);
   font-size: 0.6rem;
@@ -173,8 +178,9 @@ body {
 
 @utility text-pera {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: .3em;
+  font-size: 0.70rem;
+  letter-spacing: .07rem;
+  color: var(--color-muted2)
 }
 
 

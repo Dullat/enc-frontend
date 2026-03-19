@@ -5,59 +5,86 @@ const EncryptionPage = () => {
   const ACCENT = useSelector((state) => state.theme.accent);
   return (
     <div
-      className="flex flex-col items-center justify-center w-full"
-      style={{ minHeight: "100vh", padding: "2rem" }}
+      className="flex flex-col w-full p-3 sm:p-6"
+      style={{ minHeight: "100vh" }}
     >
-      <div
-        style={{
-          fontFamily: "var(--font-mono)",
-          fontSize: "0.6rem",
-          letterSpacing: "0.35em",
-          color: "#252535",
-          marginBottom: "1rem",
-        }}
-      >
-        MODULE // ENCRYPTION
+      <div className="flex flex-col max-w-[1200px] m-auto gap-10">
+        <div className="flex flex-row w-full gap-4">
+          <div className="flex-1">
+            <p className="text-seq">MODULE // ENCRYPTION</p>
+            <div
+              className="text-display-md text-[clamp(1.5rem,3vw,1.7rem)] font-[900]"
+              style={{ color: ACCENT }}
+            >
+              ENCRYPTION
+            </div>
+
+            <p className="text-label">
+              Military-grade file encryption. AES-256-GCM with PBKDF2 key
+              derivation
+            </p>
+          </div>
+          <div className="flex flex-col justify-end items-end hidden sm:flex">
+            <p className="text-seq">ENC ENGINE</p>
+            <p className="text-seq">ALGO:SHA-256-GCM</p>
+            <p className="text-seq">
+              MODE:<span className="text-orange opacity-30">STREAM</span>
+            </p>
+          </div>
+        </div>
+
+        <div className="flex flex-col md:flex-row gap-2 sm:gap-4">
+          <div className="flex flex-col gap-2 flex-1 ds-card p-4 grad-corner-c">
+            <div>
+              <p className="text-seq">01 // ENCRYPTION</p>
+              <div className="text-display-sm !text-[1.1rem] text-cyan">
+                ENCRYPT DATA
+              </div>
+            </div>
+            <p className="text-pera">
+              Encrypt your data with SHA-256-GCM. You will be setting a
+              password(key). <br />
+              All the enc files are directly streamed to client, noting is kept
+              on server
+            </p>
+            <div className="text-pera mb-3">
+              For more info: <span className="text-magenta ">read Docs</span>
+            </div>
+
+            <div className="flex flex-wrap">
+              <Link
+                to="/encryption/encrypt"
+                className="ds-btn ds-btn-outline-c"
+              >
+                <span>ENCRYPT</span>
+              </Link>
+            </div>
+          </div>
+          <div className="flex flex-col gap-2 flex-1 ds-card p-4 grad-corner-m">
+            <div>
+              <p className="text-seq">01 // DECRYPTION</p>
+              <div className="text-display-sm !text-[1.1rem] text-magenta">
+                DECRYPT DATA
+              </div>
+            </div>
+            <p className="text-pera">
+              Encrypt your data with SHA-256-GCM. You will be setting a
+              password(key). <br />
+              All the enc files are directly streamed to client, noting is kept
+              on server
+            </p>
+            <div className="text-pera mb-3">
+              For more info: <span className="text-magenta ">read Docs</span>
+            </div>
+
+            <div className="flex flex-wrap">
+              <button className="ds-btn ds-btn-outline-m">
+                <span>DECRYPT</span>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-      <div
-        style={{
-          fontFamily: "var(--font-display)",
-          fontSize: "2rem",
-          fontWeight: 900,
-          letterSpacing: "0.2em",
-          color: ACCENT,
-        }}
-      >
-        ENCRYPTION
-      </div>
-      <div
-        style={{
-          fontFamily: "var(--font-mono)",
-          fontSize: "0.65rem",
-          letterSpacing: "0.1em",
-          color: "#44445A",
-          marginTop: "1rem",
-        }}
-      >
-        MODULE UNDER CONSTRUCTION // BUILD v0.0.1
-      </div>
-      <Link
-        to={"/"}
-        style={{
-          marginTop: "2rem",
-          fontFamily: "var(--font-display)",
-          fontSize: "0.65rem",
-          fontWeight: 700,
-          letterSpacing: "0.25em",
-          padding: "0.7rem 1.6rem",
-          background: "transparent",
-          border: `1px solid ${ACCENT}`,
-          color: ACCENT,
-          cursor: "pointer",
-        }}
-      >
-        ← BACK TO HOME
-      </Link>
     </div>
   );
 };
