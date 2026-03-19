@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { FEATURES } from "../data/dedsecData.js";
 import { hexToRgb } from "../utils/hexToRgb.js";
 
@@ -54,7 +55,8 @@ const FeaturesSection = () => {
                   {f.desc}
                 </p>
 
-                <button
+                <Link
+                  to={f.to}
                   className={`ds-badge ${f.class} mt-auto w-min cursor-pointer hover:text-black`}
                   onMouseEnter={(e) =>
                     (e.currentTarget.style.background = f.accent)
@@ -62,7 +64,7 @@ const FeaturesSection = () => {
                   onMouseLeave={(e) => (e.currentTarget.style.background = "")}
                 >
                   {f.tag}
-                </button>
+                </Link>
               </div>
             );
           })}

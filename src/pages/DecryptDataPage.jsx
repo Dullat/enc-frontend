@@ -362,7 +362,8 @@ const DecryptDataPage = () => {
                     className="font-mono mb-2"
                     style={{ fontSize: "0.72rem", color: ACCENT }}
                   >
-                    File saved to selected directory on your system.
+                    File saved to selected directory on your system.(it will not
+                    be showen in downloads)
                   </p>
                 )}
 

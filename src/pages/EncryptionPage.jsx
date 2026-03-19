@@ -5,7 +5,7 @@ const EncryptionPage = () => {
   const ACCENT = useSelector((state) => state.theme.accent);
   return (
     <div
-      className="flex flex-col w-full p-3 sm:p-6 pb-10"
+      className="flex flex-col w-full p-3 sm:p-6 pb-20"
       style={{ minHeight: "100vh" }}
     >
       <div className="flex flex-col max-w-[1200px] m-auto gap-10">
@@ -19,7 +19,7 @@ const EncryptionPage = () => {
               ENCRYPTION
             </div>
 
-            <p className="text-label">
+            <p className="text-seq">
               Military-grade file encryption. AES-256-GCM with PBKDF2 key
               derivation
             </p>
@@ -44,8 +44,8 @@ const EncryptionPage = () => {
             <p className="text-pera">
               Encrypt your data with SHA-256-GCM. You will be setting a
               password(key). <br />
-              All the enc files are directly streamed to client, noting is kept
-              on server
+              All the enc files are directly encrypted on client, noting is sent
+              to server
             </p>
             <div className="text-pera mb-3">
               For more info: <span className="text-magenta ">read Docs</span>
@@ -68,19 +68,22 @@ const EncryptionPage = () => {
               </div>
             </div>
             <p className="text-pera">
-              Encrypt your data with SHA-256-GCM. You will be setting a
+              Decrypt your data with SHA-256-GCM. You will be requiring a
               password(key). <br />
-              All the enc files are directly streamed to client, noting is kept
-              on server
+              All the enc files are directly decrypted on client, noting is sent
+              to server
             </p>
             <div className="text-pera mb-3">
               For more info: <span className="text-magenta ">read Docs</span>
             </div>
 
             <div className="flex flex-wrap">
-              <button className="ds-btn ds-btn-outline-m">
+              <Link
+                to="/encryption/decrypt"
+                className="ds-btn ds-btn-outline-m"
+              >
                 <span>DECRYPT</span>
-              </button>
+              </Link>
             </div>
           </div>
         </div>

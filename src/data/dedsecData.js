@@ -52,10 +52,11 @@ export const FEATURES = [
   {
     seq: "F-01",
     title: "ENCRYPTION",
-    desc: "Upload any file. Set parameters. Generate SHA-256 hash and AES-256-GCM encrypted output in seconds.",
+    desc: "Choose any file. Set parameters. Generate SHA-256 hash and AES-256-GCM encrypted output in seconds.",
     accent: "#FF6200",
     tag: "ENCRYPT_DATA",
     class: "ds-badge-o",
+    to: "/encryption",
   },
   {
     seq: "F-02",
@@ -64,6 +65,7 @@ export const FEATURES = [
     accent: "#00C8FF",
     tag: "UPLOAD_DATA",
     class: "ds-badge-c",
+    to: "/drive",
   },
   {
     seq: "F-03",
@@ -72,6 +74,7 @@ export const FEATURES = [
     accent: "#FF0066",
     tag: "CHAT_LIVE",
     class: "ds-badge-m",
+    to: "/chat",
   },
   {
     seq: "F-04",
@@ -80,5 +83,6 @@ export const FEATURES = [
     accent: "#C9A84C",
     tag: "SECURE_PROFILE",
     class: "ds-badge-g",
+    to: "/profile",
   },
 ];
