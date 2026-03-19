@@ -5,7 +5,7 @@ const EncryptionPage = () => {
   const ACCENT = useSelector((state) => state.theme.accent);
   return (
     <div
-      className="flex flex-col w-full p-3 sm:p-6"
+      className="flex flex-col w-full p-3 sm:p-6 pb-10"
       style={{ minHeight: "100vh" }}
     >
       <div className="flex flex-col max-w-[1200px] m-auto gap-10">

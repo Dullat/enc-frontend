@@ -19,7 +19,8 @@ import EncryptionPage from "./pages/EncryptionPage.jsx";
 import ChatPage from "./pages/ChatPage.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import RequestEmailVerificationPage from "./pages/RequestEmailVerificationPage.jsx";
-import EncryptPage from "./pages/EncryptDataPage.jsx";
+import EncryptDataPage from "./pages/EncryptDataPage.jsx";
+import DecryptDataPage from "./pages/DecryptDataPage.jsx";
 
 import Ticker from "./theme/Ticker.jsx";
 
@@ -37,7 +38,8 @@ function App() {
           <Route element={<RequireAuth />}>
             <Route path="drive" element={<DrivePage />} />
             <Route path="encryption" element={<EncryptionPage />} />
-            <Route path="encryption/encrypt" element={<EncryptPage />} />
+            <Route path="encryption/encrypt" element={<EncryptDataPage />} />
+            <Route path="encryption/decrypt" element={<DecryptDataPage />} />
             <Route path="profile" element={<ProfilePage />} />
             <Route path="chat" element={<ChatPage />} />
           </Route>

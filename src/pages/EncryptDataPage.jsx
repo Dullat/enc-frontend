@@ -1,4 +1,5 @@
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useGetMeQuery } from "../features/user/userApi.js";
 import { setAccent } from "../features/theme/themeSlice.js";
@@ -11,12 +12,13 @@ import InfoRow from "../theme/InfoRow.jsx";
 
 import { hexToRgb } from "../utils/hexToRgb.js";
 
-const ENDPOINT = "http://localhost:5000/api/enc-direct";
-let MAX_SIZE = 1024 * 1024 * 1024;
+const ENDPOINT = "http://localhost:5000/api/enc-direct"; // ithought i would do server side decryption but, its better to do it on client side
+const BASE_SIZE = 1024 * 1024 * 1024;
+let MAX_SIZE;
 const ACCENT = "#00C8FF"; // cyan
 const ORANGE = "#FF6200";
 
-// ─── UTILS ────────────────────────────────────────────────────────────────────
+// - this is used to get size in mbs, gbs
 const fmtBytes = (b) => {
   if (b >= 1e9) return `${(b / 1e9).toFixed(2)} GB`;
   if (b >= 1e6) return `${(b / 1e6).toFixed(2)} MB`;
@@ -28,7 +30,6 @@ export default function EncryptPage() {
   // const ACCENT = useSelector(state => state.theme.accent);
   const { data, isError: isUserError } = useGetMeQuery();
   const dispatch = useDispatch();
-  dispatch(setAccent(ACCENT));
 
   const [file, setFile] = useState(null);
   const [password, setPassword] = useState("");
@@ -40,8 +41,8 @@ export default function EncryptPage() {
   const progressRef = useRef(null);
 
   data?.user.plan === "pro"
-    ? (MAX_SIZE = 2 * MAX_SIZE)
-    : (MAX_SIZE = 0.5 * MAX_SIZE);
+    ? (MAX_SIZE = 2 * BASE_SIZE)
+    : (MAX_SIZE = 0.5 * BASE_SIZE);
 
   const addLog = (msg, type = "info") => {
     const ts = new Date().toLocaleTimeString("en-GB", { hour12: false });
@@ -165,6 +166,9 @@ export default function EncryptPage() {
   const isError = status === "error";
   const canRun = !!file && password.length >= 1 && !isLoading;
 
+  useEffect(() => {
+    dispatch(setAccent(ACCENT));
+  }, [dispatch]);
   return (
     <div className="flex w-full min-h-full items-center">
       <div className="py-8 px-4 max-w-[1200px] w-full mx-auto pb-20">
@@ -183,7 +187,7 @@ export default function EncryptPage() {
             <h1
               className="font-display font-black text-cyan leading-none mb-2"
               style={{
-                fontSize: "clamp(1.4rem,3.5vw,2.2rem)",
+                fontSize: "clamp(1.4rem,3vw,2.2rem)",
                 letterSpacing: "0.22em",
               }}
             >
@@ -196,9 +200,16 @@ export default function EncryptPage() {
                 letterSpacing: "0.06em",
               }}
             >
-              AES-256-GCM with PBKDF2-SHA256 key usage. File streams directly to
-              your device — nothing stored server-side.
+              AES-256-GCM with PBKDF2-SHA256 key usage. Encryption is done
+              Entirely on your device. Noting stored on server.
             </p>
+            <Link
+              to="/encryption/decrypt"
+              className="text-seq  text-[.5rem] opacity-60"
+            >
+              Wanna Decrypt files?{" "}
+              <span className="text-magenta">Click here</span>
+            </Link>
           </div>
 
           <div className="hidden md:flex flex-col gap-1.5 items-end">
