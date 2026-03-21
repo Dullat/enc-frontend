@@ -22,6 +22,8 @@
   --accent-magenta: #FF0066;
   --accent-cyan:    #00C8FF;
   --accent-gold:    #C9A84C;
+  --accent-lime:    #A8FF00;
+  --accent-yellow:  #FFE600;
   --accent-green:   #00E87A;
 
   /* Text */
@@ -43,6 +45,7 @@
   --glow-c:         0 0 22px rgba(0,200,255,0.4);
   --glow-g:         0 0 22px rgba(201,168,76,0.35);
   --glow-green:     0 0 22px rgba(0,232,122,0.35);
+  --glow-v:         0 0 22px rgba(110, 68, 255, 0.4);
 
   /* Easing */
   --ease-ds:        cubic-bezier(0.22, 1, 0.36, 1);
@@ -62,6 +65,8 @@
   --color-cyan:        var(--accent-cyan);
   --color-gold:        var(--accent-gold);
   --color-green:       var(--accent-green);
+  --color-lime:        var(--accent-lime);
+  --color-yellow:      var(--accent-yellow);
   --color-ds-white:    var(--text-white);
   --color-body:        var(--text-body);
   --color-muted:       var(--text-muted);
@@ -77,6 +82,7 @@
   --shadow-glow-m:       var(--glow-m);
   --shadow-glow-c:       var(--glow-c);
   --shadow-glow-g:       var(--glow-g);
+  --shadow-glow-v:     var(--glow-v);
 
   --ease-ds: var(--ease-ds);
 }
@@ -362,6 +368,24 @@ body {
   border: 1px solid var(--accent-gold);
   color: var(--accent-gold);
 }
+
+@utility ds-btn-outline-y {
+  background: transparent;
+  border: 1px solid var(--accent-yellow);
+  color: var(--accent-yellow);
+}
+
+@utility ds-btn-outline-green {
+  background: transparent;
+  border: 1px solid var(--accent-green);
+  color: var(--accent-green);
+}
+
+@utility ds-btn-outline-l {
+  background: transparent;
+  border: 1px solid var(--accent-lime);
+  color: var(--accent-lime);
+}
 .ds-btn-outline-g::before { background: var(--accent-gold); }
 .ds-btn-outline-g:hover   { color: var(--bg-void); box-shadow: var(--glow-g); }
 
@@ -452,6 +476,8 @@ body {
 @utility ds-badge-g    { color: var(--accent-gold);    }
 @utility ds-badge-green{ color: var(--accent-green);   }
 @utility ds-badge-muted{ color: var(--text-muted);     }
+@utility ds-badge-v    { color: var(--accent-lime);    }
+@utility ds-badge-y    { color: var(--accent-yellow);  }
 
 
 /* ============================================================

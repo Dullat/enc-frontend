@@ -4,6 +4,7 @@ import {
   DriveIcon,
   ProfileIcon,
   ChatIcon,
+  CompressIcon,
 } from "../svgs/PrimaryIcons.jsx";
 export const TICKER_ITEMS = [
   { label: "SYS.AUTH", value: "CREDENTIAL MODULE ACTIVE", highlight: true },
@@ -20,6 +21,7 @@ export const MODULE_ACCENT = {
   drive: { color: "#00C8FF", label: "CYAN" },
   chat: { color: "#FF0066", label: "MAGENTA" },
   profile: { color: "#C9A84C", label: "GOLD" },
+  compression: { color: "#FFE600", label: "YELLOW" },
 };
 
 export const NAV_ITEMS = [
@@ -37,6 +39,13 @@ export const NAV_ITEMS = [
     seq: "03",
     icon: DriveIcon,
     to: "drive",
+  },
+  {
+    id: "compression",
+    label: "COMPRESSION",
+    seq: "06",
+    icon: CompressIcon,
+    to: "compression",
   },
   { id: "chat", label: "LIVE CHAT", seq: "04", icon: ChatIcon, to: "chat" },
   {
@@ -75,6 +84,15 @@ export const FEATURES = [
     tag: "CHAT_LIVE",
     class: "ds-badge-m",
     to: "/chat",
+  },
+  {
+    seq: "F-05",
+    title: "COMPRESSION",
+    desc: "Compress and Decpmpress files, by using zip and unzip",
+    accent: "#FFE600",
+    tag: "COMPRESSION",
+    class: "ds-badge-y",
+    to: "/compression",
   },
   {
     seq: "F-04",

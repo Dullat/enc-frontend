@@ -21,6 +21,7 @@ import NotFound from "./pages/NotFound.jsx";
 import RequestEmailVerificationPage from "./pages/RequestEmailVerificationPage.jsx";
 import EncryptDataPage from "./pages/EncryptDataPage.jsx";
 import DecryptDataPage from "./pages/DecryptDataPage.jsx";
+import CompressionPage from "./pages/CompressionPage.jsx";
 
 import Ticker from "./theme/Ticker.jsx";
 
@@ -40,6 +41,7 @@ function App() {
             <Route path="encryption" element={<EncryptionPage />} />
             <Route path="encryption/encrypt" element={<EncryptDataPage />} />
             <Route path="encryption/decrypt" element={<DecryptDataPage />} />
+            <Route path="compression" element={<CompressionPage />} />
             <Route path="profile" element={<ProfilePage />} />
             <Route path="chat" element={<ChatPage />} />
           </Route>

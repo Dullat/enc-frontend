@@ -62,6 +62,30 @@ export const ChatIcon = ({ size = 16, color = "#FF6200" }) => {
     </svg>
   );
 };
+
+export const CompressIcon = ({ size = 16, color = "#6E44FF" }) => {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke={color}
+      strokeWidth="1"
+    >
+      <path d="M8 1v4" />
+      <path d="M6 3l2-2 2 2" />
+
+      <path d="M8 11v4" />
+      <path d="M6 13l2 2 2-2" />
+
+      <rect x="3" y="6" width="10" height="4" />
+      <line x1="5" y1="8" x2="11" y2="8" />
+      <line x1="5" y1="7" x2="11" y2="7" />
+      <line x1="5" y1="9" x2="11" y2="9" />
+    </svg>
+  );
+};
 export const ProfileIcon = ({ size = 16, color = "#FF6200" }) => {
   return (
     <svg
