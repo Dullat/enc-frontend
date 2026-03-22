@@ -22,6 +22,7 @@ import RequestEmailVerificationPage from "./pages/RequestEmailVerificationPage.j
 import EncryptDataPage from "./pages/EncryptDataPage.jsx";
 import DecryptDataPage from "./pages/DecryptDataPage.jsx";
 import CompressionPage from "./pages/CompressionPage.jsx";
+import ZipPage from "./pages/ZipPage.jsx";
 
 import Ticker from "./theme/Ticker.jsx";
 
@@ -42,6 +43,7 @@ function App() {
             <Route path="encryption/encrypt" element={<EncryptDataPage />} />
             <Route path="encryption/decrypt" element={<DecryptDataPage />} />
             <Route path="compression" element={<CompressionPage />} />
+            <Route path="compression/zip" element={<ZipPage />} />
             <Route path="profile" element={<ProfilePage />} />
             <Route path="chat" element={<ChatPage />} />
           </Route>

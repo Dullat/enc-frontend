@@ -5,7 +5,6 @@ import { Link, Outlet } from "react-router-dom";
 
 const useRequireAuth = () => {
   const { data, isLoading, isError } = useGetMeQuery();
-  console.log(data);
 
   if (isError) return <NotLoggedIn />;
   if (isLoading)

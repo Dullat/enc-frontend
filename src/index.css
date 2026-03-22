@@ -214,6 +214,7 @@ body {
 @utility grad-top-m    { background: linear-gradient(90deg, transparent, var(--accent-magenta), transparent); }
 @utility grad-top-c    { background: linear-gradient(90deg, transparent, var(--accent-cyan),    transparent); }
 @utility grad-top-g    { background: linear-gradient(90deg, transparent, var(--accent-gold),    transparent); }
+@utility grad-top-y    { background: linear-gradient(90deg, transparent, var(--accent-yellow),    transparent); }
 
 @utility grad-corner-o { background: radial-gradient(circle at 0% 100%, rgba(255,98,0,0.14)   0%, transparent 68%); }
 @utility grad-corner-m { background: radial-gradient(circle at 100% 0%, rgba(255,0,102,0.14)  0%, transparent 68%); }

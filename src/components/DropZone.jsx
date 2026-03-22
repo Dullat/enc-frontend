@@ -37,29 +37,20 @@ const DropZone = ({ file, onFile, accent, disabled, MAX_SIZE }) => {
         if (!disabled) setDrag(true);
       }}
       onDragLeave={() => setDrag(false)}
+      className={`flex flex-col items-center justify-center gap-3 px-6 py-7 min-h-[130px] border border-dashed    transition-all duration-200 ${disabled ? "cursor-not-allowed opacity-50" : file ? "cursor-default" : "cursor-pointer"}`}
       style={{
-        border: `1px dashed ${drag ? accent : file ? accent + "66" : "#252530"}`,
+        borderColor: drag ? accent : file ? `${accent}66` : "#252530",
         background: drag
           ? `rgba(${hexToRgb(accent)},0.05)`
           : file
             ? `rgba(${hexToRgb(accent)},0.02)`
             : "transparent",
-        padding: "1.8rem 1.5rem",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: "0.8rem",
-        cursor: disabled ? "not-allowed" : file ? "default" : "pointer",
-        opacity: disabled ? 0.5 : 1,
-        transition: "all 0.2s",
-        minHeight: 130,
       }}
     >
       <input
         ref={ref}
         type="file"
-        style={{ display: "none" }}
+        className="hidden"
         onChange={(e) => pick(e.target.files[0])}
         disabled={disabled}
       />
@@ -73,113 +64,63 @@ const DropZone = ({ file, onFile, accent, disabled, MAX_SIZE }) => {
             fill="none"
             stroke={drag ? accent : "#252530"}
             strokeWidth="1"
-            style={{ transition: "stroke 0.2s" }}
+            className="transition-colors duration-200"
           >
             <rect x="1" y="1" width="28" height="28" />
             <path d="M10 18 L15 13 L20 18" />
             <line x1="15" y1="13" x2="15" y2="23" />
             <line x1="8" y1="23" x2="22" y2="23" />
           </svg>
-          <div style={{ textAlign: "center" }}>
+
+          <div className="text-center">
             <p
-              className={`font-family-mono`}
-              style={{
-                fontSize: "0.65rem",
-                letterSpacing: "0.18em",
-                color: drag ? accent : "#44445A",
-                transition: "color 0.2s",
-              }}
+              className="font-family-mono text-[0.65rem] tracking-[0.18em] transition-colors duration-200"
+              style={{ color: drag ? accent : "#44445A" }}
             >
               {drag ? "DROP FILE HERE" : "DRAG FILE OR CLICK TO SELECT"}
             </p>
-            <p
-              className={`font-family-mono`}
-              style={{
-                fontSize: "0.5rem",
-                letterSpacing: "0.12em",
-                color: "#252535",
-                marginTop: "0.3rem",
-              }}
-            >
+
+            <p className="font-family-mono text-[0.5rem] tracking-[0.12em] text-[#252535] mt-1">
               ANY FILE TYPE — MAX 500 MB
             </p>
           </div>
         </>
       ) : (
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "1rem",
-            width: "100%",
-          }}
-        >
+        <div className="flex items-center gap-4 w-full">
           {/* Type badge */}
           <div
+            className="w-10 h-10 flex-shrink-0 flex items-center justify-center"
             style={{
-              width: 40,
-              height: 40,
-              flexShrink: 0,
               background: `rgba(${hexToRgb(accent)},0.07)`,
               border: `1px solid ${accent}44`,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
             }}
           >
             <span
-              className={`font-family-mono`}
-              style={{
-                fontSize: "0.42rem",
-                color: accent,
-                letterSpacing: "0.08em",
-              }}
+              className="font-family-mono text-[0.42rem] tracking-[0.08em]"
+              style={{ color: accent }}
             >
               {file.name.split(".").pop().toUpperCase().slice(0, 4)}
             </span>
           </div>
-          <div style={{ flex: 1, minWidth: 0 }}>
-            <p
-              className={`font-family-mono`}
-              style={{
-                fontSize: "0.65rem",
-                color: "#F2F2FA",
-                letterSpacing: "0.06em",
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-              }}
-            >
+
+          {/* File info */}
+          <div className="flex-1 min-w-0">
+            <p className="font-family-mono text-[0.65rem] text-[#F2F2FA] tracking-[0.06em] truncate">
               {file.name}
             </p>
-            <p
-              className={`font-family-mono`}
-              style={{
-                fontSize: "0.52rem",
-                color: "#44445A",
-                marginTop: "0.2rem",
-                letterSpacing: "0.1em",
-              }}
-            >
+
+            <p className="font-family-mono text-[0.52rem] text-[#44445A] mt-1 tracking-[0.1em]">
               {fmtBytes(file.size)} · {file.type || "UNKNOWN TYPE"}
             </p>
           </div>
+
+          {/* Remove button */}
           {!disabled && (
             <button
-              className={`font-family-mono`}
+              className="font-family-mono text-[0.5rem] tracking-[0.1em] border border-[#252530] text-[#44445A] px-2 py-1 flex-shrink-0"
               onClick={(e) => {
                 e.stopPropagation();
                 onFile(null);
-              }}
-              style={{
-                fontSize: "0.5rem",
-                letterSpacing: "0.1em",
-                background: "none",
-                border: "1px solid #252530",
-                color: "#44445A",
-                padding: "0.25rem 0.5rem",
-                cursor: "pointer",
-                flexShrink: 0,
               }}
             >
               ✕
