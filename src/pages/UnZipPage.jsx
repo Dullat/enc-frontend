@@ -1,4 +1,4 @@
-import { zipSync, strToU8, Zip } from "fflate";
+import { zipSync, unzipSync, strToU8, Zip } from "fflate";
 import { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
@@ -16,47 +16,41 @@ const fmtBytes = (b) => {
   return `${b} B`;
 };
 
-const FileUpload = ({ files, setFiles, disabled, MAX_SIZE }) => {
+const FileUpload = ({ file, setFile, disabled, MAX_SIZE }) => {
   const ref = useRef(null);
   const [drag, setDrag] = useState(false);
 
   const pick = (fs) => {
-    const filesArray = Array.from(fs);
-    setFiles((prev) => [
-      ...prev,
-      ...filesArray.map((f) => ({
-        name: f.name,
-        size: f.size,
-        type: f.type,
-        file: f,
-      })),
-    ]);
+    if (
+      fs.type !== "application/zip" &&
+      !fs.name.toLowerCase().endsWith(".zip")
+    )
+      return alert("Only .zip files allowed");
+    setFile(fs);
   };
-
-  const isFiles = files.length > 0;
 
   const onDrop = (e) => {
     e.preventDefault();
-    if (!disabled) pick(e.dataTransfer.files);
+    if (!disabled) pick(e.dataTransfer.files[0]);
   };
 
   return (
     <div
       onDrop={onDrop}
-      onClick={() => !disabled && !isFiles && ref.current.click()}
+      onClick={() => !disabled && !file && ref.current.click()}
       onDragOver={(e) => {
         e.preventDefault();
         if (!disabled) setDrag(true);
       }}
       onDragLeave={() => setDrag(false)}
       className={`flex flex-col items-center justify-center gap-3 px-6 py-7 min-h-[130px] border border-dashed transition-all duration-200
-        ${disabled ? "cursor-not-allowed opacity-50" : isFiles ? "cursor-default" : "cursor-pointer"}
+        ${disabled ? "cursor-not-allowed opacity-50" : file ? "cursor-default" : "cursor-pointer"}
       `}
       style={{
-        borderColor: drag ? ACCENT : isFiles ? `${ACCENT}66` : "#252530",
+        borderColor: drag ? ACCENT : file ? `${ACCENT}66` : "#252530",
         background: drag
           ? `rgba(${hexToRgb(ACCENT)},0.05)`
-          : isFiles
+          : file
             ? `rgba(${hexToRgb(ACCENT)},0.02)`
             : "transparent",
       }}
@@ -64,11 +58,12 @@ const FileUpload = ({ files, setFiles, disabled, MAX_SIZE }) => {
       <input
         ref={ref}
         type="file"
-        onChange={(e) => pick(e.target.files)}
-        multiple
+        accept=".zip,application/zip"
+        className="hidden"
+        onChange={(e) => pick(e.target.files[0])}
         className="hidden"
       />
-      {files.length < 1 ? (
+      {!file ? (
         <>
           <svg
             width="30"
@@ -90,7 +85,7 @@ const FileUpload = ({ files, setFiles, disabled, MAX_SIZE }) => {
               className="font-family-mono text-[0.65rem] tracking-[0.18em] transition-colors duration-200"
               style={{ color: drag ? ACCENT : "#44445A" }}
             >
-              {drag ? "DROP FILES HERE" : "DRAG FILES OR CLICK TO SELECT"}
+              {drag ? "DROP FILE HERE" : "DRAG FILE OR CLICK TO SELECT"}
             </p>
 
             <p className="font-family-mono text-[0.5rem] tracking-[0.12em] text-[#252535] mt-1">
@@ -99,59 +94,55 @@ const FileUpload = ({ files, setFiles, disabled, MAX_SIZE }) => {
           </div>
         </>
       ) : (
-        files.map((file, idx) => (
+        <div key={`${file.name}`} className="flex items-center gap-4 w-full">
+          {/* Type badge */}
           <div
-            key={`${file.name}-${idx}`}
-            className="flex items-center gap-4 w-full"
+            className="w-10 h-10 flex-shrink-0 flex items-center justify-center"
+            style={{
+              background: `rgba(${hexToRgb(ACCENT)},0.07)`,
+              border: `1px solid ${ACCENT}44`,
+            }}
           >
-            {/* Type badge */}
-            <div
-              className="w-10 h-10 flex-shrink-0 flex items-center justify-center"
-              style={{
-                background: `rgba(${hexToRgb(ACCENT)},0.07)`,
-                border: `1px solid ${ACCENT}44`,
+            <span
+              className="font-family-mono text-[0.42rem] tracking-[0.08em]"
+              style={{ color: ACCENT }}
+            >
+              {file.name.split(".").pop().toUpperCase().slice(0, 4)}
+            </span>
+          </div>
+
+          {/* File info */}
+          <div className="flex-1 min-w-0">
+            <p className="font-family-mono text-[0.65rem] text-[#F2F2FA] tracking-[0.06em] truncate">
+              {file.name}
+            </p>
+
+            <p className="font-family-mono text-[0.52rem] text-[#44445A] mt-1 tracking-[0.1em]">
+              {fmtBytes(file.size)} · {file.type || "UNKNOWN TYPE"}
+            </p>
+          </div>
+
+          {/* Remove button */}
+          {!disabled && (
+            <button
+              className="font-family-mono text-[0.5rem] tracking-[0.1em] border border-[#252530] text-[#44445A] px-2 py-1 flex-shrink-0 hover:text-[#F2F2FA] hover:border-[#44445A]"
+              onClick={(e) => {
+                e.stopPropagation();
+                setFile(null);
               }}
             >
-              <span
-                className="font-family-mono text-[0.42rem] tracking-[0.08em]"
-                style={{ color: ACCENT }}
-              >
-                {file.name.split(".").pop().toUpperCase().slice(0, 4)}
-              </span>
-            </div>
-
-            {/* File info */}
-            <div className="flex-1 min-w-0">
-              <p className="font-family-mono text-[0.65rem] text-[#F2F2FA] tracking-[0.06em] truncate">
-                {file.name}
-              </p>
-
-              <p className="font-family-mono text-[0.52rem] text-[#44445A] mt-1 tracking-[0.1em]">
-                {fmtBytes(file.size)} · {file.type || "UNKNOWN TYPE"}
-              </p>
-            </div>
-
-            {/* Remove button */}
-            {!disabled && (
-              <button
-                className="font-family-mono text-[0.5rem] tracking-[0.1em] border border-[#252530] text-[#44445A] px-2 py-1 flex-shrink-0 hover:text-[#F2F2FA] hover:border-[#44445A]"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setFiles((prev) => prev.filter((_, i) => i !== idx));
-                }}
-              >
-                ✕
-              </button>
-            )}
-          </div>
-        ))
+              ✕
+            </button>
+          )}
+        </div>
       )}
     </div>
   );
 };
 
-const ZipPage = () => {
-  const [files, setFiles] = useState([]);
+const UnZipPage = () => {
+  const [file, setFile] = useState(null);
+  const [extractedFilesList, setExtractedFilesList] = useState([]);
   const [status, setStatus] = useState("idle"); // idle , loading , done ,error
   const [progress, setProgress] = useState(0); // it will be a fake progress
   const [log, setLog] = useState([]);
@@ -162,7 +153,7 @@ const ZipPage = () => {
   const isLoading = status === "loading";
   const isDone = status === "done";
   const isError = status === "error";
-  const canRun = files.length > 0 && status === "idle" && !isLoading;
+  const canRun = !!file && status === "idle" && !isLoading;
 
   const startFakeProgress = () => {
     let p = 0;
@@ -176,27 +167,30 @@ const ZipPage = () => {
     setProgress(final);
   };
 
-  const handleCompress = async (filesArray) => {
+  const handleCompress = async (file) => {
     setStatus("loading");
     startFakeProgress();
 
     try {
-      const zipData = {};
-
-      for (const file of filesArray) {
-        const arrayBuffer = await file.file.arrayBuffer();
-        zipData[file.name] = new Uint8Array(arrayBuffer);
-      }
+      // when we select file using input, it only selects the its info and refrence no binary bytes loaded into ram
+      // to load that into ram we do arrayBuffer, and files bytes are in arrayBuffer const, (data is loaded into ram and this  arrayBuffer variable is pointing to that)
+      const arrayBuffer = await file.arrayBuffer();
+      // Uint8Array allow you to inspect and view that files's bytes, its 8byte (0-255, cover all letters and symbols), now we can read actual bytes
+      const zipData = new Uint8Array(arrayBuffer);
 
       // but i could also use fflate.zip(zipData, (err, data) => ...)
-      const compressed = zipSync(zipData);
+      const unzipped = unzipSync(zipData);
+      console.log(unzipped);
 
-      const compressedBlob = new Blob([compressed], {
-        type: "application/zip",
+      const filesList = Object.entries(unzipped).map(([name, data]) => {
+        const blob = new Blob([data]);
+        const url = URL.createObjectURL(blob);
+
+        return { name, url, size: data.length };
       });
-      const url = URL.createObjectURL(compressedBlob);
 
-      setDownloadUrl(url);
+      setExtractedFilesList(filesList);
+
       stopFakeProgress(100);
       setStatus("done");
     } catch (err) {
@@ -208,15 +202,29 @@ const ZipPage = () => {
   };
 
   const handleReset = () => {
-    setFiles([]);
+    setFile(null);
     setStatus("idle");
     setProgress(0);
     setLog([]);
     setErrMsg("");
     if (downloadUrl) URL.revokeObjectURL(downloadUrl);
     setDownloadUrl("");
+
+    if (extractedFilesList && extractedFilesList.length > 0) {
+      for (let file of extractedFilesList) {
+        if (file.url) {
+          URL.revokeObjectURL(file.url);
+        }
+      }
+    }
+
+    setExtractedFilesList([]);
     clearInterval(progressRef.current);
   };
+
+  useEffect(() => {
+    console.log(extractedFilesList);
+  }, [extractedFilesList]);
 
   return (
     <div className="flex flex-col w-full min-h-dvh justify-center pb-20 items-center">
@@ -230,7 +238,7 @@ const ZipPage = () => {
                 letterSpacing: "0.35em",
               }}
             >
-              MODULE_04 // COMPRESS
+              MODULE_04 // DECOMPRESS
             </p>
             <h1
               className="font-display font-black text-yellow leading-none mb-2"
@@ -239,7 +247,7 @@ const ZipPage = () => {
                 letterSpacing: "0.22em",
               }}
             >
-              ZIP DATA
+              UNZIP DATA
             </h1>
             <p
               className="font-mono text-label leading-[1.9] max-w-[480px]"
@@ -248,14 +256,14 @@ const ZipPage = () => {
                 letterSpacing: "0.06em",
               }}
             >
-              Compress(ZIP) files by choosing different compression level.
-              Compression is done on Client itself. Nothing is sent to server
+              DECompress(UN_ZIP) files. DECompression is done on Client itself.
+              Nothing is sent to server
             </p>
             <Link
-              to="/compression/unzip"
+              to="/compression/zip"
               className="text-seq  text-[.5rem] opacity-60"
             >
-              Wanna DeCompress files?{" "}
+              Wanna Compress files?{" "}
               <span className="text-magenta">Click here</span>
             </Link>
           </div>
@@ -293,6 +301,60 @@ const ZipPage = () => {
               }}
             />
 
+            {extractedFilesList.length > 0 && (
+              <div className="flex flex-col gap-4 py-2">
+                <p className="text-seq text-green">Downlaod your files</p>
+                {extractedFilesList.map((file) => (
+                  <div
+                    key={`${file.name}`}
+                    className="flex items-center gap-4 w-full"
+                  >
+                    {/* Type badge */}
+                    <div
+                      className="w-10 h-10 flex-shrink-0 flex items-center justify-center"
+                      style={{
+                        background: `rgba(${hexToRgb(ACCENT)},0.07)`,
+                        border: `1px solid ${ACCENT}44`,
+                      }}
+                    >
+                      <span
+                        className="font-family-mono text-[0.42rem] tracking-[0.08em]"
+                        style={{ color: ACCENT }}
+                      >
+                        {file.name.split(".").pop().toUpperCase().slice(0, 4)}
+                      </span>
+                    </div>
+
+                    {/* File info */}
+                    <div className="flex-1 min-w-0">
+                      <p className="font-family-mono text-[0.65rem] text-[#F2F2FA] tracking-[0.06em] truncate">
+                        {file.name}
+                      </p>
+
+                      <p className="font-family-mono text-[0.52rem] text-[#44445A] mt-1 tracking-[0.1em]">
+                        {fmtBytes(file.size)} ·{" "}
+                        {file.name.split(".").pop().toUpperCase().slice(0, 4) ||
+                          "UNKNOWN TYPE"}
+                      </p>
+                    </div>
+
+                    <button
+                      className="font-family-mono text-[0.5rem] tracking-[0.1em] border border-[#252530] text-[#44445A] px-2 py-1 flex-shrink-0 hover:text-[#F2F2FA] hover:border-[#44445A]"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        const a = document.createElement("a");
+                        a.href = file.url;
+                        a.download = file.name;
+                        a.click();
+                      }}
+                    >
+                      ⬇ Download
+                    </button>
+                  </div>
+                ))}
+                <hr className="opacity-20 py-2" />
+              </div>
+            )}
             <div className="flex flex-col gap-5.5">
               <div className="w-full">
                 <div className="flex items-center gap-3 mb-3">
@@ -316,8 +378,8 @@ const ZipPage = () => {
                   </span>
                 </div>
                 <FileUpload
-                  files={files}
-                  setFiles={setFiles}
+                  file={file}
+                  setFile={setFile}
                   disabled={isLoading || isDone}
                   MAX_SIZE={500}
                 />
@@ -358,10 +420,10 @@ const ZipPage = () => {
                       >
                         <Dot ok={!isError} pulse={isLoading} />
                         {isDone
-                          ? "COMPRESSION COMPLETE"
+                          ? "DECOMPRESSION COMPLETE"
                           : isError
                             ? "OPERATION FAILED"
-                            : "COMPRESSING..."}
+                            : "DECOMPRESSING..."}
                       </span>
                       <span
                         className="font-mono"
@@ -410,30 +472,30 @@ const ZipPage = () => {
                     )}
                   </div>
                 )}
-                {isDone && (
-                  <div className="mb-4">
-                    <p className="text-green font-family-mono text-[.72rem] mb-3">
-                      FILES COMPRESSED SUCCESSFULLY
-                    </p>
-                    <a
-                      href={downloadUrl}
-                      download="compressed_data.zip"
-                      className="ds-btn border border-yellow text-yellow hover:bg-yellow/10"
-                      style={{
-                        padding: "0.8rem 2rem",
-                        fontSize: "0.6rem",
-                      }}
-                    >
-                      DOWNLOAD ZIP
-                    </a>
-                  </div>
-                )}
+                {/* {isDone && ( */}
+                {/*   <div className="mb-4"> */}
+                {/*     <p className="text-green font-family-mono text-[.72rem] mb-3"> */}
+                {/*       FILES COMPRESSED SUCCESSFULLY */}
+                {/*     </p> */}
+                {/*     <a */}
+                {/*       href={downloadUrl} */}
+                {/*       download="compressed_data.zip" */}
+                {/*       className="ds-btn border border-yellow text-yellow hover:bg-yellow/10" */}
+                {/*       style={{ */}
+                {/*         padding: "0.8rem 2rem", */}
+                {/*         fontSize: "0.6rem", */}
+                {/*       }} */}
+                {/*     > */}
+                {/*       DOWNLOAD ZIP */}
+                {/*     </a> */}
+                {/*   </div> */}
+                {/* )} */}
 
                 {/* btns */}
                 <div className="flex gap-2.5 flex-wrap">
                   {!isDone ? (
                     <button
-                      onClick={() => handleCompress(files)}
+                      onClick={() => handleCompress(file)}
                       disabled={!canRun}
                       className={`ds-btn ds-btn-outline-y ${canRun ? "pointer-events-auto" : "!pointer-events-none"} `}
                       style={{
@@ -446,7 +508,7 @@ const ZipPage = () => {
                       }}
                     >
                       <span>
-                        {isLoading ? "COMPRESSING..." : "COMPRESS FILES"}
+                        {isLoading ? "DECOMPRESSING..." : "DECOMPRESS FILES"}
                       </span>
                     </button>
                   ) : (
@@ -457,11 +519,11 @@ const ZipPage = () => {
                         padding: "0.85rem 2rem",
                       }}
                     >
-                      ↺ COMPRESS ANOTHER
+                      ↺ DECOMPRESS ANOTHER
                     </button>
                   )}
 
-                  {files && !isLoading && !isDone && (
+                  {file && !isLoading && !isDone && (
                     <button
                       onClick={handleReset}
                       className="ds-btn ds-btn-ghost"
@@ -478,11 +540,10 @@ const ZipPage = () => {
                   <div className="flex flex-col gap-1.5 mt-3.5">
                     {[
                       {
-                        ok: files.length > 0,
-                        text:
-                          files.length > 0
-                            ? `${files.length} FILE(S) SELECTED`
-                            : "NO FILE SELECTED",
+                        ok: file,
+                        text: file
+                          ? `${file.name} FILE(S) SELECTED`
+                          : "NO FILE SELECTED",
                       },
                     ].map((v, i) => (
                       <div key={i} className="flex items-center gap-2">
@@ -510,4 +571,4 @@ const ZipPage = () => {
   );
 };
 
-export default ZipPage;
+export default UnZipPage;

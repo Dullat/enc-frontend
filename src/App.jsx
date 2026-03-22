@@ -23,6 +23,7 @@ import EncryptDataPage from "./pages/EncryptDataPage.jsx";
 import DecryptDataPage from "./pages/DecryptDataPage.jsx";
 import CompressionPage from "./pages/CompressionPage.jsx";
 import ZipPage from "./pages/ZipPage.jsx";
+import UnZipPage from "./pages/UnZipPage.jsx";
 
 import Ticker from "./theme/Ticker.jsx";
 
@@ -44,6 +45,7 @@ function App() {
             <Route path="encryption/decrypt" element={<DecryptDataPage />} />
             <Route path="compression" element={<CompressionPage />} />
             <Route path="compression/zip" element={<ZipPage />} />
+            <Route path="compression/unzip" element={<UnZipPage />} />
             <Route path="profile" element={<ProfilePage />} />
             <Route path="chat" element={<ChatPage />} />
           </Route>
