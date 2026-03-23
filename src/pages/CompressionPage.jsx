@@ -56,7 +56,7 @@ const CompressionPage = () => {
           </div>
           <div className="flex flex-col gap-2 flex-1 ds-card p-4 grad-corner-m">
             <div>
-              <p className="text-seq">01 // DECOMPRESS</p>
+              <p className="text-seq">02 // DECOMPRESS</p>
               <div className="text-display-sm !text-[1.1rem] text-green">
                 UNZIP DATA
               </div>

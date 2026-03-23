@@ -61,7 +61,6 @@ const FileUpload = ({ file, setFile, disabled, MAX_SIZE }) => {
         accept=".zip,application/zip"
         className="hidden"
         onChange={(e) => pick(e.target.files[0])}
-        className="hidden"
       />
       {!file ? (
         <>

@@ -37,15 +37,20 @@ function App() {
         <Route path="register" element={<RegisterPage />} />
         <Route path="/" element={<RootLayout />}>
           <Route index element={<HomePage />} />
+
+          {/* Compression */}
+          <Route path="compression" element={<CompressionPage />} />
+          <Route path="compression/zip" element={<ZipPage />} />
+          <Route path="compression/unzip" element={<UnZipPage />} />
           {/* Protected routes */}
           <Route element={<RequireAuth />}>
             <Route path="drive" element={<DrivePage />} />
             <Route path="encryption" element={<EncryptionPage />} />
             <Route path="encryption/encrypt" element={<EncryptDataPage />} />
             <Route path="encryption/decrypt" element={<DecryptDataPage />} />
-            <Route path="compression" element={<CompressionPage />} />
-            <Route path="compression/zip" element={<ZipPage />} />
-            <Route path="compression/unzip" element={<UnZipPage />} />
+            {/* <Route path="compression" element={<CompressionPage />} /> */}
+            {/* <Route path="compression/zip" element={<ZipPage />} /> */}
+            {/* <Route path="compression/unzip" element={<UnZipPage />} /> */}
             <Route path="profile" element={<ProfilePage />} />
             <Route path="chat" element={<ChatPage />} />
           </Route>

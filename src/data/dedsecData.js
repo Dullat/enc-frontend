@@ -43,15 +43,15 @@ export const NAV_ITEMS = [
   {
     id: "compression",
     label: "COMPRESSION",
-    seq: "06",
+    seq: "04",
     icon: CompressIcon,
     to: "compression",
   },
-  { id: "chat", label: "LIVE CHAT", seq: "04", icon: ChatIcon, to: "chat" },
+  { id: "chat", label: "LIVE CHAT", seq: "05", icon: ChatIcon, to: "chat" },
   {
     id: "profile",
     label: "PROFILE",
-    seq: "05",
+    seq: "06",
     icon: ProfileIcon,
     to: "profile",
   },
@@ -86,7 +86,7 @@ export const FEATURES = [
     to: "/chat",
   },
   {
-    seq: "F-05",
+    seq: "F-04",
     title: "COMPRESSION",
     desc: "Compress and Decpmpress files, by using zip and unzip",
     accent: "#FFE600",
@@ -95,7 +95,7 @@ export const FEATURES = [
     to: "/compression",
   },
   {
-    seq: "F-04",
+    seq: "F-05",
     title: "PROFILE",
     desc: "Manage identity, clearance level, and access keys. Your operator dossier.",
     accent: "#C9A84C",
