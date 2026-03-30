@@ -92,7 +92,7 @@ const ChatPage = () => {
 
   if (!isUnlocked) {
     return (
-      <div className="flex w-full h-dvh items-center justify-center bg-background p-4">
+      <div className="flex w-full h-dvh  items-center justify-center bg-background p-4">
         <form
           onSubmit={handleUnlock}
           className="ds-card p-8 w-full max-w-md flex flex-col gap-6 relative"
@@ -133,7 +133,7 @@ const ChatPage = () => {
   }
 
   return (
-    <div className="flex w-full h-dvh overflow-hidden bg-background relative">
+    <div className="flex w-full h-dvh pb-20 overflow-hidden bg-background relative">
       {/* Mobile Back Button */}
       {!showSidebar && isMobile && (
         <button

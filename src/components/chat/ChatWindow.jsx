@@ -27,7 +27,10 @@ const ChatWindow = ({ activeUser, messages, onSendMessage }) => {
     return (
       <div className="flex-1 h-full flex items-center justify-center bg-background/50">
         <div className="text-center p-8 border border-dashed border-line rounded-lg">
-          <h3 className="font-family-display text-xl mb-4" style={{ color: ACCENT }}>
+          <h3
+            className="font-family-display text-xl mb-4"
+            style={{ color: ACCENT }}
+          >
             SELECT_A_CHANNEL
           </h3>
           <p className="font-family-mono text-muted text-sm">
@@ -42,7 +45,8 @@ const ChatWindow = ({ activeUser, messages, onSendMessage }) => {
     <div className="flex-1 h-full flex flex-col bg-background/50">
       {/* Header */}
       <div className="p-4 border-b border-line flex items-center gap-4 bg-surface/50 backdrop-blur-md sticky top-0 z-10">
-        <div className="w-10 h-10 sm:hidden invisible" /> {/* Placeholder for mobile back btn space */}
+        <div className="w-10 h-10 sm:hidden invisible" />{" "}
+        {/* Placeholder for mobile back btn space */}
         <div
           className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-black flex-shrink-0"
           style={{ background: ACCENT }}
@@ -50,10 +54,15 @@ const ChatWindow = ({ activeUser, messages, onSendMessage }) => {
           {activeUser.username[0].toUpperCase()}
         </div>
         <div className="flex flex-col">
-          <h2 className="font-family-display text-lg tracking-wider" style={{ color: ACCENT }}>
+          <h2
+            className="font-family-display text-lg tracking-wider"
+            style={{ color: ACCENT }}
+          >
             {activeUser.username}
           </h2>
-          <span className="text-[10px] text-green-500 font-family-mono">ONLINE // SECURED</span>
+          <span className="text-[10px] text-green-500 font-family-mono">
+            SECURED
+          </span>
         </div>
       </div>
 
@@ -88,7 +97,10 @@ const ChatWindow = ({ activeUser, messages, onSendMessage }) => {
       </div>
 
       {/* Input Field */}
-      <form onSubmit={handleSend} className="p-4 border-t border-line bg-surface/50">
+      <form
+        onSubmit={handleSend}
+        className="p-4 border-t border-line bg-surface/50"
+      >
         <div className="flex gap-4">
           <input
             type="text"
