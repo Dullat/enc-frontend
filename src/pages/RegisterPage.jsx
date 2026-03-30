@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { generateAndVaultKeys } from "../utils/cryptoUtils.js";
 import {
   useGetMeQuery,
   useRegisterMutation,
@@ -54,7 +55,17 @@ const RegisterPage = () => {
       isPassMatch
     ) {
       try {
-        await register({ username: name, email, password }).unwrap();
+        const { publicKey, encryptedPrivateKey, keySalt, keyIv } =
+          await generateAndVaultKeys(password);
+        await register({
+          username: name,
+          email,
+          password,
+          publicKey,
+          encryptedPrivateKey,
+          keySalt,
+          keyIv,
+        }).unwrap();
       } catch (err) {
         console.log(err);
       }
@@ -195,7 +206,7 @@ const RegisterPage = () => {
         </div>
         {isError && (
           <div className="text-label !text-red-600">
-            Error: {error.data.message}
+            Error: {error?.data?.message || "UKNOWN ERROR"}
           </div>
         )}
         <button

@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Form, Link, useNavigate } from "react-router-dom";
 import DedsecBg from "../theme/DedsecBg.jsx";
 import { DedsecLogo } from "../svgs/DedsecLogo.jsx";
 import { useLoginMutation, useGetMeQuery } from "../features/user/userApi.js";
+import { unlockPrivateKey } from "../utils/cryptoUtils.js";
 
 const LoginPage = () => {
   const [login, { isLoading, isError, error }] = useLoginMutation();
@@ -16,14 +17,27 @@ const LoginPage = () => {
     const password = await formData.get("password");
 
     try {
-      const user = await login({ email, password }).unwrap();
+      const response = await login({ email, password }).unwrap();
+      const userData = response.user;
+
+      const privateKey = await unlockPrivateKey(password, {
+        encryptedPrivateKey: userData.encryptedPrivateKey,
+        keyIv: userData.keyIv,
+        keySalt: userData.keySalt,
+      });
+
+      window.my_secure_chat_key = privateKey; // for now just attach to window , i will find other way later
+
       navigate("/profile");
-    } catch (error) {}
+    } catch (error) {
+      console.error("Login or decryption failed", error);
+    }
   };
 
   useEffect(() => {
     data?.user && navigate("/profile");
   }, [userLoading, data]);
+
   return (
     <DedsecBg glowRadius={120} glowStr={0.5}>
       <div
@@ -80,7 +94,7 @@ const LoginPage = () => {
           </div>
           {isError && (
             <div className="text-label !text-red-600">
-              Error: {error.data.message}
+              Error: {error?.data?.message || "something went wrong"}
             </div>
           )}
           <button
