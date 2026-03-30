@@ -11,10 +11,26 @@ const userApi = userApiBase.injectEndpoints({
       invalidatesTags: ["user"],
     }),
     register: builder.mutation({
-      query: ({ username, email, password }) => ({
+      query: ({
+        username,
+        email,
+        password,
+        keyIv,
+        keySalt,
+        publicKey,
+        encryptedPrivateKey,
+      }) => ({
         url: "auth/register",
         method: "POST",
-        body: { username, email, password },
+        body: {
+          username,
+          email,
+          password,
+          keySalt,
+          keyIv,
+          publicKey,
+          encryptedPrivateKey,
+        },
       }),
     }),
     getMe: builder.query({
@@ -73,6 +89,19 @@ const userApi = userApiBase.injectEndpoints({
         body: { email },
       }),
     }),
+    getAllUsers: builder.query({
+      query: () => ({
+        url: "auth/get-all-users",
+        method: "GET",
+      }),
+      providesTags: ["users"],
+    }),
+    getChatHistory: builder.query({
+      query: (userId) => ({
+        url: `chat/history/${userId}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -85,5 +114,7 @@ export const {
   useForgetPassMutation,
   useGetSessionsQuery,
   useRequestEmailVerificationMutation,
+  useGetAllUsersQuery,
+  useGetChatHistoryQuery,
 } = userApi;
 export default userApi;
