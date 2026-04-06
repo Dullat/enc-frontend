@@ -1,64 +1,145 @@
 # ENC - Frontend (The Dedsec Project)
 
-This is my attempt at building a hacker-themed web app that looks like something out of Watch Dogs. It's mostly black backgrounds and monospace fonts for now, but the idea is to have a secure hub for chatting and storing files without people snooping around.
+[![Vite](https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E)](https://vitejs.dev/)
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
+[![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Redux](https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white)](https://redux-toolkit.js.org/)
+
+high-security, hacker-themed web interface. This project is a secure hub/platform for encrypted communication, data protection, and high-performance file compression and file encryption.
 
 ---
 
-## What I'm using (and struggling with)
+##  Tech Stack & Architecture Approach
 
-### The Core Stuff
-*   React 19: I went with the latest version because I like living on the edge, even if I don't use half of the new features yet.
-*   Vite: Because life is too short to wait for Webpack to bundle things.
-*   React Router v7: Using the new createBrowserRouter thing. It works, so I'm not touching it.
+### Core Frameworks
+*   **React 19 (Vite):** React for a high-performance, reactive UI.
+*   **Tailwind CSS v4:** Modern utility-first CSS approach with custom theme extensions for the Dedsec aesthetic, (all the utilies and classes were prepared in advance)
+*   **React Router v7:** Routing with dynamic layouts and authentication guard
 
-### State and Data (The "Fun" Part)
-*   Redux Toolkit: Because apparently passing props is too simple, so I added slices and selectors to make my life more "organized" (complicated).
-*   RTK Query: This actually feels like magic. It handles all the fetching and caching so I don't have to write a million useEffects. 
-*   The Auth Strategy: I'm using credentials: "include" and a fancy interceptor that catches 401 errors to refresh tokens. It took me way too long to figure out why I was getting logged out constantly, but it's finally stable.
+### State & Data Management
+*   **Redux Toolkit:** State management for global themes, user sessions, and application logic.
+*   **RTK Query:** Advanced data fetching and caching layer with automatic re-authentication logic (auto auth on refresh).
+*   **JWT Auth:** Secure cookie-based authentication with automatic token refresh on 401 intercepts.
 
-### Styling
-*   Tailwind CSS v4: Standard utility-first stuff. 
-*   Dynamic Theming: I built a system where the accent color changes globally based on the Redux state. It's great for when you get bored of green and want everything to be purple.
-*   Fonts: Using a bunch of monospace and "gamer" fonts like JetBrains Mono and Orbitron. If it's not a monospace font, it's not "hacker" enough.
+### Cryptography & Security
+*   **Web Crypto API:** Native browser encryption for maximum security
+*   **E2EE Chat:** End-to-end encrypted messaging using RSA-OAEP for key exchange and AES-256-GCM for content encryption
+*   **Client-Side Vault:** Private keys are stored in memory and protected by a PBKDF2-derived master passphrase (password is used as master-phrase, to unlock chat)
+*   **Zero-Knowledge Architecture:** Encryption/Decryption and Compression/Decompression are performed entirely on the client. Keys and raw data is never sent to the server
 
----
-
-## Where things are at right now
-
-### What actually works:
-*   Authentication: You can login, register, and logout. The site actually remembers who you are, which is a win.
-*   The Theme System: You can change the accent color and it actually updates everywhere. Priority #1, obviously.
-*   User Dashboard: It can tell you what device you're logged in from. I used ua-parser-js for this so I can feel like I'm tracking people.
-*   Password Recovery: Forgot password and email verification are "mostly" there.
-*   Responsive Layout: It works on my phone and my laptop. If you have a weird screen size, good luck.
-
-### What's still "Coming Soon" (a.k.a. Under Construction):
-*   The Drive: It's a placeholder. Don't try to upload your life savings yet.
-*   Encryption Tools: I have the UI, but it doesn't actually encrypt anything yet. It's "visual" security for now.
-*   Chat: Same here. You can look at the page, but nobody is talking back.
+### Real-Time & Utilities
+*   **Socket.io-client:** Bi-directional, real-time communication for the E2EE chat system.
+*   **fflate:** High-speed, memory-efficient ZIP compression and decompression in the browser
+*   **ua-parser-js:** Device and browser fingerprinting for session monitoring
 
 ---
 
-## Project Structure (In case I forget where I put things)
+##  Project Structure
 
 ```text
-enc-frontend/
+.
 ├── src/
-│   ├── app/                # Where the Redux store lives.
-│   ├── assets/             # SVGs and things I stole from the internet.
-│   ├── components/         # Reusable bits like sidebars and buttons.
-│   ├── features/           # The logic for themes and users.
-│   ├── hooks/              # Custom hooks I wrote to feel smart.
-│   ├── layouts/            # The basic shell of the app.
-│   ├── pages/              # The actual views (some are just empty shells).
-│   ├── services/           # The base API setup.
-│   ├── svgs/               # A lot of custom SVG code.
-│   ├── theme/              # Hacker backgrounds and tickers.
-│   └── utils/              # Math and color helpers I barely understand.
+│   ├── app/                      # Redux store
+│   │   └── store.js
+│   ├── assets/                   # You know what it is
+│   │   └── react.svg
+│   ├── components/               # UI components
+│   │   ├── chat/
+│   │   │   ├── ChatSidebar.jsx
+│   │   │   └── ChatWindow.jsx
+│   │   ├── BottomNav.jsx
+│   │   ├── DropZone.jsx
+│   │   ├── FeaturesSection.jsx
+│   │   ├── ForgetPassword.jsx
+│   │   ├── Hero.jsx
+│   │   ├── KeyInput.jsx
+│   │   ├── LogLine.jsx
+│   │   ├── Sidebar.jsx
+│   │   ├── TeaserSection.jsx
+│   │   ├── UpdateUsernameForm.jsx
+│   │   └── UserSessions.jsx
+│   ├── data/                     # Static data for theme and config
+│   │   └── dedsecData.js
+│   ├── features/                 # Redux slices and API
+│   │   ├── theme/
+│   │   │   └── themeSlice.js
+│   │   └── user/
+│   │       └── userApi.js        # This is the main thing
+│   ├── hooks/                    # Custom React hooks
+│   │   ├── useInView.jsx
+│   │   ├── useIsMobile.jsx
+│   │   ├── useRequireAuth.jsx
+│   │   └── useSocket.jsx
+│   ├── layouts/                  # Main layout
+│   │   └── RootLayout.jsx
+│   ├── pages/                    # Main route Pages
+│   │   ├── ChatPage.jsx          # E2EE Chat Page
+│   │   ├── CompressionPage.jsx   # ZIP Tool LandingPage
+│   │   ├── CustomMessagePage.jsx # (go back, not logged in, etc)
+│   │   ├── DecryptDataPage.jsx   # Client-side Decryption
+│   │   ├── DrivePage.jsx         # Cloud Storage (not started yet)
+│   │   ├── EncryptDataPage.jsx   # Client-side Encryption
+│   │   ├── EncryptionPage.jsx    # Encryption Tool LandingPage
+│   │   ├── HomePage.jsx
+│   │   ├── LoginPage.jsx
+│   │   ├── NotFound.jsx
+│   │   ├── NotLoggedIn.jsx
+│   │   ├── ProfilePage.jsx
+│   │   ├── RegisterPage.jsx
+│   │   ├── RequestEmailVerificationPage.jsx
+│   │   ├── UnZipPage.jsx         # Client-side Decompression
+│   │   └── ZipPage.jsx           # Client-side Compression
+│   ├── services/                 # API base, its extended in features
+│   │   └── api.js
+│   ├── svgs/                     # Special SVG components, Dedsec theme
+│   │   ├── DedsecLogo.jsx
+│   │   ├── HeroBgSvg.jsx
+│   │   ├── HeroBgSvgMobile.jsx
+│   │   └── PrimaryIcons.jsx
+│   ├── theme/                    # UI (Ticker, Dots, Backgrounds)
+│   │   ├── DedsecBackgroundMobile.jsx
+│   │   ├── DedsecBackgroundPc.jsx
+│   │   ├── DedsecBg.jsx
+│   │   ├── Dot.jsx
+│   │   ├── InfoRow.jsx
+│   │   └── Ticker.jsx
+│   ├── utils/                    # Helpers and Crypto utils
+│   │   ├── cryptoUtils.js
+│   │   └── hexToRgb.js
+│   ├── App.jsx
+│   ├── index.css                 # Custom Dedsec Global styles
+│   └── main.jsx
+├── public/
+│   ├── videos/
+│   │   ├── bigBrother-poster.png
+│   │   └── bigBrother.mp4
+│   ├── logo.svg
+│   └── vite.svg
+├── Documentation/                # Archi and Sys-Design docs
+│   └── chatSys.md
+├── eslint.config.js
+├── index.html
+├── package.json
+├── vercel.json
+├── vite.config.js
+└── README.md
 ```
 
 ---
 
-## My Progress so far
+##  Current Status
 
-I've basically moved from "how do I center a div" to "how do I manage a complex JWT refresh flow without breaking everything." The foundation is solid. The auth works, the routing is secure, and the state management isn't a complete mess. Now I just need to actually build the "Drive" and "Chat" features instead of just making the background look cool.
+*   **Authentication:** Fully functional with secure session persistence and JWT cookies
+*   **Theme System:** Real-time global accent color management by using Redux
+*   **Secure Chat:** E2EE with Web Crypto and Socket.io 
+*   **Data Tools:** Client-side AES-256-GCM encryption/decryption and ZIP compression/decompression are operational
+
+---
+
+## Next
+*   **Forget-Password** Right now Password forget does not gen new Keys(and this is a problem, on forget old chat will be locked)
+*   **Drive:** First handle the password forget, the i will see
+
+## 🔒 Security Notice
+
+All encryption keys are derived on the client from user-password. If you lose your master passphrase(password), your encrypted data and chat history cannot be recovered.
