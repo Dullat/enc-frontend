@@ -42,7 +42,7 @@ const ChatWindow = ({ activeUser, messages, onSendMessage }) => {
   }
 
   return (
-    <div className="flex-1 h-full flex flex-col bg-background/50">
+    <div className="flex-1 h-full flex flex-col bg-background/50 pb-[65px] md:pb-0">
       {/* Header */}
       <div className="p-4 border-b border-line flex items-center gap-4 bg-surface/50 backdrop-blur-md sticky top-0 z-10">
         <div className="w-10 h-10 sm:hidden invisible" />{" "}

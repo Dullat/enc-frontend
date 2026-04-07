@@ -133,7 +133,7 @@ const ChatPage = () => {
   }
 
   return (
-    <div className="flex w-full h-dvh pb-20 overflow-hidden bg-background relative">
+    <div className="flex w-full h-dvh overflow-hidden bg-background relative">
       {/* Mobile Back Button */}
       {!showSidebar && isMobile && (
         <button
