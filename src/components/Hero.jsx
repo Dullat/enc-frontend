@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import HeroBgSvg from "../svgs/HeroBgSvg.jsx";
 import HeroBgSvgMobile from "../svgs/HeroBgSvgMobile.jsx";
 import useIsMobile from "../hooks/useIsMobile.jsx";
@@ -16,6 +17,7 @@ const Hero = ({ color = "#FF6200", onEnter = () => {} }) => {
   ];
 
   const isMobile = useIsMobile();
+  const nvigate = useNavigate();
 
   useEffect(() => {
     const t = setInterval(() => setTick((p) => (p + 1) % PHRASES.length), 2200);
@@ -141,8 +143,8 @@ const Hero = ({ color = "#FF6200", onEnter = () => {} }) => {
         className="flex flex-wrap gap-3 mt-8"
         style={{ animation: "ds-fadeup 0.6s 0.4s ease both" }}
       >
-        <button
-          onClick={onEnter}
+        <Link
+          to="/encryption"
           className={`relative overflow-hidden group font-family-display font-bold text-[0.68rem] tracking-[0.3em] px-[2.2rem] py-[0.9rem] border-none cursor-pointer transition-shadow duration-300`}
           style={{ background: color, color: "#060608" }}
           onMouseEnter={(e) =>
@@ -151,7 +153,7 @@ const Hero = ({ color = "#FF6200", onEnter = () => {} }) => {
           onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "none")}
         >
           ENTER SYSTEM
-        </button>
+        </Link>
         <button
           style={{
             fontFamily: "var(--font-display)",
@@ -173,6 +175,9 @@ const Hero = ({ color = "#FF6200", onEnter = () => {} }) => {
             e.currentTarget.style.borderColor = "#252530";
             e.currentTarget.style.color = "#44445A";
           }}
+          onClick={() =>
+            (window.location.href = "https://github.com/dullat/enc-frontend")
+          }
         >
           READ DOCS
         </button>

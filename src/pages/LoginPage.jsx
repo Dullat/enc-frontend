@@ -1,14 +1,22 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Form, Link, useNavigate } from "react-router-dom";
 import DedsecBg from "../theme/DedsecBg.jsx";
 import { DedsecLogo } from "../svgs/DedsecLogo.jsx";
-import { useLoginMutation, useGetMeQuery } from "../features/user/userApi.js";
+import {
+  useLoginMutation,
+  useGetMeQuery,
+  useRequestEmailVerificationMutation,
+} from "../features/user/userApi.js";
 import { unlockPrivateKey } from "../utils/cryptoUtils.js";
 
 const LoginPage = () => {
   const [login, { isLoading, isError, error }] = useLoginMutation();
+  const [RequestEmailVerification, { isSuccess }] =
+    useRequestEmailVerificationMutation();
   const { data, isLoading: userLoading } = useGetMeQuery();
   const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -83,7 +91,13 @@ const LoginPage = () => {
             <label htmlFor="email" className="ds-field-label">
               Email
             </label>
-            <input type="text" name="email" className="ds-input" />
+            <input
+              type="text"
+              name="email"
+              className="ds-input"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
             <div className="ds-divider h-[2px]"></div>
           </div>
           <div className="ds-field">
@@ -93,8 +107,16 @@ const LoginPage = () => {
             <input type="password" name="password" className="ds-input" />
           </div>
           {isError && (
-            <div className="text-label !text-red-600">
-              Error: {error?.data?.message || "something went wrong"}
+            <div className="text-label !text-red-600 flex justify-between">
+              <div>Error: {error?.data?.message || "something went wrong"}</div>
+              <div>
+                <button
+                  className="cursor-pointer"
+                  onClick={async () => RequestEmailVerification(email)}
+                >
+                  Re-Verify
+                </button>
+              </div>
             </div>
           )}
           <button
