@@ -141,6 +141,7 @@ export default function EncryptPage() {
       addLog(`ENCRYPTED FILE DOWNLOADED: ${file.name}`, "ok");
       addLog("SESSION COMPLETE — KEY NEVER TRANSMITTED", "ok");
       setStatus("done");
+      alert("File Saved in selected folder");
     } catch (err) {
       stopFakeProgress(0);
       const msg = err.message || "UNKNOWN ERROR";

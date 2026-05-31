@@ -104,14 +104,26 @@ const DecryptDataPage = () => {
         throw new Error("FILE DOES NOT APPEAR TO BE AN .enc FILE");
       }
 
-      const fileHandle = await window.showSaveFilePicker({
-        suggestedName: getOriginalFilename(file.name),
-      });
+      // const fileHandle = await window.showSaveFilePicker({
+      //   suggestedName: getOriginalFilename(file.name),
+      // });
 
       const decryptedBlob = await decrypt(file, password);
 
-      const writable = await fileHandle.createWritable();
-      await decryptedBlob.stream().pipeTo(writable);
+      const originalName = getOriginalFilename(file.name);
+
+      const url = URL.createObjectURL(decryptedBlob);
+
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = originalName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      // const writable = await fileHandle.createWritable();
+      // await decryptedBlob.stream().pipeTo(writable);
 
       stopFakeProgress(100);
       setStatus("done");
@@ -362,8 +374,7 @@ const DecryptDataPage = () => {
                     className="font-mono mb-2"
                     style={{ fontSize: "0.72rem", color: ACCENT }}
                   >
-                    File saved to selected directory on your system.(it will not
-                    be showen in downloads)
+                    File saved to selected directory on your system.
                   </p>
                 )}
 
